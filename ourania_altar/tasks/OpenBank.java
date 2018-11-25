@@ -13,6 +13,7 @@ import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.task.Task;
 import com.stixx.bots.ourania_altar.OuraniaAltar;
 
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class OpenBank extends Task {
@@ -22,7 +23,7 @@ public class OpenBank extends Task {
 
         Npc banker = Npcs.newQuery().names("Eniola").results().first();
         if (banker != null) {
-            if (banker.isVisible()) {
+            if (banker.isVisible() && !Bank.isOpen()) {
                 banker.interact("Bank");
                 System.out.println("Opened bank");
             } else {
@@ -34,8 +35,27 @@ public class OpenBank extends Task {
 
     @Override
     public boolean validate() {
-        Pattern stamina = Pattern.compile("Stamina pot\\.+}");
+        long staminaTime = ((new Date()).getTime() - OuraniaAltar.staminaTimer) / 1000;
+        Pattern stamina = Pattern.compile("Stamina pot.+}");
         Player player = Players.getLocal();
-        return (OuraniaAltar.BANK_AREA.contains(player) && !Inventory.isFull() && !Inventory.contains(stamina) && !Inventory.contains(OuraniaAltar.OPTION_FOOD) && !Bank.isOpen());
+        return (OuraniaAltar.BANK_AREA.contains(player) && !Inventory.isFull() && !Inventory.contains(OuraniaAltar.OPTION_FOOD) && !Bank.isOpen() && !canStillFillPouches() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina());
+    }
+
+    private boolean canStillFillPouches() {
+        int essence = Inventory.newQuery().names("Pure essence").results().size();
+        switch (OuraniaAltar.OPTION_RUNEPOUCH) {
+            case 2:
+                if (!OuraniaAltar.smallPouch.hasEssenceInPouch() && essence >= 3) {
+                    return true;
+                } else if (!OuraniaAltar.mediumPouch.hasEssenceInPouch() && essence >= 6) {
+                    return true;
+                }
+                else if (!OuraniaAltar.largePouch.hasEssenceInPouch() && essence >= 9) {
+                    return true;
+                } else {
+                    return false;
+                }
+                default: return false;
+        }
     }
 }

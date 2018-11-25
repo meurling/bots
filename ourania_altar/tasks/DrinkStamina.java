@@ -14,7 +14,7 @@ public class DrinkStamina extends Task {
     public void execute() {
         System.out.println("Executing: DrinkStamina");
 
-        Pattern stamina = Pattern.compile("Stamina pot\\.+}");
+        Pattern stamina = Pattern.compile("Stamina pot.+");
         SpriteItem potion = Inventory.newQuery().names(stamina).results().first();
         if (potion != null) {
             if (potion.click()) {
@@ -26,8 +26,6 @@ public class DrinkStamina extends Task {
 
     @Override
     public boolean validate() {
-        long staminaTime = ((new Date()).getTime() - OuraniaAltar.staminaTimer) / 1000;
-        Pattern stamina = Pattern.compile("Stamina pot\\.+}");
-        return (Inventory.contains(stamina) && !Bank.isOpen() && staminaTime < 19);
+        return (!Bank.isOpen() && OuraniaAltar.hasNoBrokenPouches() && OuraniaAltar.mustDrinkStamina());
     }
 }

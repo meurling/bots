@@ -16,13 +16,13 @@ public class CraftRune extends Task {
     @Override
     public boolean validate() {
         Player player = Players.getLocal();
-        boolean valid = (Inventory.contains("Pure essence") && !GameObjects.newQuery().names("Runecrafting altar").actions("Craft-rune").results().isEmpty()) && OuraniaAltar.RC_AREA.contains(player);
+        boolean valid = (Inventory.contains("Pure essence") && !GameObjects.newQuery().names("Runecrafting altar").actions("Craft-rune").results().isEmpty()) && OuraniaAltar.RC_AREA.contains(player) && !OuraniaAltar.canEmptyPouch();
         return valid;
     }
 
     @Override
     public void execute() {
-        System.out.println("Craft Rune");
+        System.out.println("Execute: Craft Rune");
         craftRune();
     }
 
@@ -33,7 +33,7 @@ public class CraftRune extends Task {
                 Camera.turnTo(altar);
             } else if (altar.interact("Craft-rune")) {
                 Execution.delayUntil(()->Players.getLocal().getAnimationId() == -1, 5000);
-                Execution.delay(70, 90);
+                Execution.delay(500, 600);
             }
         }
     }

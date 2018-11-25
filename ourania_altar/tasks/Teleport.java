@@ -2,6 +2,7 @@ package com.stixx.bots.ourania_altar.tasks;
 
 import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.entities.details.Locatable;
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Openable;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Tab;
 import com.runemate.game.api.hybrid.location.Area;
@@ -21,15 +22,16 @@ public class Teleport extends Task {
     public boolean validate() {
         Player player = Players.getLocal();
 
-        boolean valid = (OuraniaAltar.allPouchesEmpty() && OuraniaAltar.RC_AREA.contains(player));
+        boolean valid = (OuraniaAltar.allPouchesEmpty() && OuraniaAltar.RC_AREA.contains(player) && player.getAnimationId() == -1 && !Inventory.contains("Pure essence"));
         return valid;
     }
 
     @Override
     public void execute() {
-        System.out.println("Executing: Teleporting");
-        Magic.Lunar.OURANIA_TELEPORT.activate();
-        Execution.delayUntil(()->Players.getLocal().getAnimationId() == -1, 5000);
-        Execution.delay(31, 41);
+        if (!Inventory.contains("Pure essence")) {
+            System.out.println("Executing: Teleporting");
+            Magic.Lunar.OURANIA_TELEPORT.activate();
+            Execution.delayUntil(()->!OuraniaAltar.RC_AREA.contains(Players.getLocal()), 3000);
+        }
     }
 }

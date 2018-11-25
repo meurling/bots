@@ -22,6 +22,6 @@ public class EatFood extends Task {
 
     @Override
     public boolean validate() {
-        return (Inventory.contains(OuraniaAltar.OPTION_FOOD) && !Bank.isOpen());
+        return (Inventory.contains(OuraniaAltar.OPTION_FOOD) && !Bank.isOpen() && OuraniaAltar.hasNoBrokenPouches());
     }
 }

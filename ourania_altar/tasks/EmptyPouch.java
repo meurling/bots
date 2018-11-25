@@ -28,25 +28,8 @@ public class EmptyPouch extends Task{
     @Override
     public boolean validate() {
         // make sure there are pouches to empty
-        boolean valid = !GameObjects.newQuery().names("Runecrafting altar").results().isEmpty() && !Inventory.contains("Pure essence") && OuraniaAltar.RC_AREA.contains(Players.getLocal());
-        if (valid) {
-            switch (option) {
-                case (0):
-                    // dont empty pouches
-                    return false;
-                case (1):
-                    // empty medium and small
-                case (2):
-                    // empty upto large
-                    return (Inventory.contains(largePouch) && Inventory.contains(mediumPouch) && Inventory.contains(smallPouch)
-                            && (essencePouches[0].hasEssenceInPouch() || essencePouches[1].hasEssenceInPouch() || essencePouches[2].hasEssenceInPouch()));
-                case (3):
-                    // empty upto giant
-
-                default: return false;
-            }
-        }
-        return false;
+        boolean valid = !GameObjects.newQuery().names("Runecrafting altar").results().isEmpty() && OuraniaAltar.RC_AREA.contains(Players.getLocal()) && OuraniaAltar.canEmptyPouch();
+        return valid;
     }
 
     @Override
@@ -60,8 +43,10 @@ public class EmptyPouch extends Task{
             case (2):
                 // empty upto large
                 emptyPouch(2);
-                emptyPouch(0);
-                emptyPouch(1);
+                if (!OuraniaAltar.largePouch.hasEssenceInPouch()) {
+                    emptyPouch(0);
+                    emptyPouch(1);
+                }
             case (3):
                 // empty upto giant
 
@@ -69,18 +54,23 @@ public class EmptyPouch extends Task{
     }
     private void emptyPouch(int essencePouch) {
         EssencePouch pouch = essencePouches[essencePouch];
-        if (pouch.hasEssenceInPouch() && Inventory.contains(pouch.getName()) && 28 - Inventory.getItems().size() - pouch.getCapacity() >= 0 ) {
+        if (pouch.canEmptyPouch()) {
             Keyboard.pressKey(16); // hold shift
             if (Keyboard.isPressed(16)) {
                 SpriteItem item = Inventory.newQuery().names(pouch.getName()).results().first();
                 if (item.click()) {
                     OuraniaAltar.essencePouches[essencePouch].setHasEssenceInPouch(false);
                     System.out.println(pouch.getName() + " Was emptied");
-                    Execution.delay(23, 62);
+                    Execution.delay(31, 49);
                     Keyboard.releaseKey(16);
+                    Execution.delayUntil(() -> Inventory.contains("Pure essence"), 600, 900);
                 }
             }
         }
+    }
+
+    private int essenceInventory() {
+        return Inventory.newQuery().names("Pure essence").results().size();
     }
 
     private void craftRune() {

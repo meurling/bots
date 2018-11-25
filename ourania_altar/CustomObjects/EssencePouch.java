@@ -1,5 +1,7 @@
 package com.stixx.bots.ourania_altar.CustomObjects;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
+
 public class EssencePouch {
     private boolean hasEssenceInPouch = false;
     private String name;
@@ -8,6 +10,10 @@ public class EssencePouch {
         this.name = name;
         this.capacity = capacity;
 
+    }
+
+    public boolean canEmptyPouch() {
+        return (hasEssenceInPouch && 28 - capacity - Inventory.getItems().size() >= 0);
     }
 
     public boolean hasEssenceInPouch() {

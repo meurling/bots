@@ -1,5 +1,6 @@
 package com.stixx.bots.ourania_altar.tasks;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
 import com.runemate.game.api.hybrid.region.Players;
@@ -30,7 +31,7 @@ public class FillPouch extends Task {
     @Override
     public boolean validate() {
         int essenceInventory = Inventory.newQuery().names("Pure essence").results().size();
-        return (essenceInventory > 0 && OuraniaAltar.BANK_AREA.contains(Players.getLocal()) && !OuraniaAltar.allPouchesFull());
+        return (essenceInventory > 0 && OuraniaAltar.BANK_AREA.contains(Players.getLocal()) && !OuraniaAltar.allPouchesFull() && !Bank.isOpen() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina());
     }
 
     private void fillPouch(EssencePouch pouch) {
@@ -41,10 +42,13 @@ public class FillPouch extends Task {
                 if (invPouch.click()) {
                     pouch.setHasEssenceInPouch(true);
                     System.out.println(pouch.getName() + " was filled");
-                    Execution.delay(20, 60);
+                    Execution.delay(80, 180);
+
                 }
             }
         }
     }
-
+    private int essenceInventory() {
+        return Inventory.newQuery().names("Pure essence").results().size();
+    }
 }

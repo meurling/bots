@@ -1,11 +1,16 @@
 package com.stixx.bots.ourania_altar;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.location.Area;
 import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.script.framework.task.TaskBot;
 import com.stixx.bots.ourania_altar.CustomObjects.EssencePouch;
 import com.stixx.bots.ourania_altar.CustomObjects.Status;
 import com.stixx.bots.ourania_altar.tasks.*;
+
+import java.util.Date;
+import java.util.regex.Pattern;
 
 public class OuraniaAltar extends TaskBot {
 
@@ -15,9 +20,10 @@ public class OuraniaAltar extends TaskBot {
     public static EssencePouch giantPouch = new EssencePouch("Giant pouch", 12);
     public static EssencePouch[] essencePouches = {smallPouch, mediumPouch, largePouch, giantPouch};
 
-    public static long staminaTimer = System.currentTimeMillis();
+    public static long staminaTimer;
 
     public static boolean followingPlayer = false;
+    public static Coordinate lastLocation;
 
     public static int OPTION_RUNEPOUCH = 2; // 0-no pouch | 1-medium | 2-large | 3-giant
     public static String OPTION_PAYMENT_RUNE = "Rune pouch";
@@ -35,8 +41,9 @@ public class OuraniaAltar extends TaskBot {
         super.onStart(arguments);
 
         System.out.println("Bot Started!");
+        staminaTimer = System.currentTimeMillis() - 100 * 1000;
         setLoopDelay(250, 500);
-        add(new CraftRune(), new EmptyPouch(), new Teleport(), new WalkToLadder(), new CloseBank(), new OpenBank(), new DepositInventory(), new FillPouch(), new WithdrawEssence(), new EatFood(), new DrinkStamina(), new WalkToAltar());
+        add(new RepairPouch(), new CraftRune(), new ToggleRun(), new WalkToBank(), new EmptyPouch(), new Teleport(), new WalkToLadder(), new CloseBank(), new OpenBank(), new DepositInventory(), new FillPouch(), new WithdrawEssence(), new EatFood(), new DrinkStamina(), new WalkToAltar());
     }
 
     public static boolean allPouchesEmpty() {
@@ -57,6 +64,29 @@ public class OuraniaAltar extends TaskBot {
             }
             default: return false;
         }
+    }
+
+    public static boolean canEmptyPouch() {
+        switch (OPTION_RUNEPOUCH) {
+            case 0:
+                return false;
+            case 2:
+                return (smallPouch.canEmptyPouch() || mediumPouch.canEmptyPouch() || mediumPouch.canEmptyPouch());
+            default: return false;
+        }
+    }
+
+    public static boolean hasNoBrokenPouches() {
+        return !(Inventory.containsAnyOf(5513, 5511, 5515));
+    }
+
+    public static boolean mustDrinkStamina() {
+        long staminaTime = ((new Date()).getTime() - OuraniaAltar.staminaTimer) / 1000;
+        System.out.println("Stamina time: " + staminaTime);
+        Pattern stamina = Pattern.compile("Stamina pot.+");
+        boolean hasStamina = Inventory.contains(stamina);
+        boolean valid = (hasStamina && !Bank.isOpen() && staminaTime > 100);
+        return valid;
     }
 
     public static boolean allPouchesFull() {

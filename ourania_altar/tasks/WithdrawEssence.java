@@ -4,6 +4,7 @@ import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Health;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
+import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.task.Task;
@@ -19,8 +20,7 @@ public class WithdrawEssence extends Task {
 
         withdrawStamina();
         withdrawFood();
-        Bank.withdraw("Pure essence", 28);
-        System.out.println("Withdrew essence");
+        withdrawEssence();
     }
 
     @Override
@@ -34,10 +34,16 @@ public class WithdrawEssence extends Task {
         }
     }
 
+    public void withdrawEssence() {
+        if (Inventory.getItems().size() < 27)
+        Bank.withdraw("Pure essence", 28);
+        System.out.println("Withdrew essence");
+    }
+
     public void withdrawStamina() {
-        Pattern stamina = Pattern.compile("Stamina pot\\.+}");
+        Pattern stamina = Pattern.compile("Stamina pot.+");
         long staminaTime = ((new Date()).getTime() - OuraniaAltar.staminaTimer) / 1000;
-        if (Bank.contains(stamina) && staminaTime < 19 && !Inventory.contains(stamina)) {
+        if ((staminaTime > 100 && !Inventory.contains(stamina)) || Traversal.getRunEnergy() < 20) {
             Bank.withdraw(stamina, 1);
             System.out.println("Withdrew Stamina");
         }

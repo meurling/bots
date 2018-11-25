@@ -6,6 +6,7 @@ import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
 import com.runemate.game.api.hybrid.location.Area;
 import com.runemate.game.api.hybrid.location.Coordinate;
+import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.location.navigation.cognizant.RegionPath;
 import com.runemate.game.api.hybrid.queries.NpcQueryBuilder;
 import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
@@ -88,6 +89,14 @@ public class RunePicker extends LoopingScript {
         checkInArea();
         GroundItem bestRune = findBestRune();
         pickUpRune(bestRune);
+    }
+
+    public void handleRun() {
+        if (!Traversal.isRunEnabled()) {
+            if (Traversal.getRunEnergy() > 20) {
+                Traversal.toggleRun();
+            }
+        }
     }
 
     public void clickSquare(Coordinate coordinate) {
