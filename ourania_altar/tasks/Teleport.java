@@ -22,7 +22,7 @@ public class Teleport extends Task {
     public boolean validate() {
         Player player = Players.getLocal();
 
-        boolean valid = (OuraniaAltar.allPouchesEmpty() && OuraniaAltar.RC_AREA.contains(player) && player.getAnimationId() == -1 && !Inventory.contains("Pure essence"));
+        boolean valid = (OuraniaAltar.shouldTasksPause() && OuraniaAltar.allPouchesEmpty() && OuraniaAltar.RC_AREA.contains(player) && player.getAnimationId() == -1 && !Inventory.contains("Pure essence"));
         return valid;
     }
 

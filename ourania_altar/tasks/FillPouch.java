@@ -16,13 +16,25 @@ public class FillPouch extends Task {
 
         int essenceInventory = Inventory.newQuery().names("Pure essence").results().size();
         if (essenceInventory > 0) {
-            switch (OuraniaAltar.OPTION_RUNEPOUCH) {
+            switch (OuraniaAltar.OPTION_ESSENCEPOUCH) {
                 case 0:
                     System.out.println("No pouches to fill");
+                    break;
+                case 1:
+                    fillPouch(OuraniaAltar.mediumPouch);
+                    fillPouch(OuraniaAltar.smallPouch);
+                    break;
                 case 2:
                     fillPouch(OuraniaAltar.largePouch);
                     fillPouch(OuraniaAltar.mediumPouch);
                     fillPouch(OuraniaAltar.smallPouch);
+                    break;
+                case 3:
+                    fillPouch(OuraniaAltar.giantPouch);
+                    fillPouch(OuraniaAltar.smallPouch);
+                    fillPouch(OuraniaAltar.largePouch);
+                    fillPouch(OuraniaAltar.mediumPouch);
+                    break;
             }
         }
 
@@ -31,7 +43,7 @@ public class FillPouch extends Task {
     @Override
     public boolean validate() {
         int essenceInventory = Inventory.newQuery().names("Pure essence").results().size();
-        return (essenceInventory > 0 && OuraniaAltar.BANK_AREA.contains(Players.getLocal()) && !OuraniaAltar.allPouchesFull() && !Bank.isOpen() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina());
+        return (OuraniaAltar.shouldTasksPause() && essenceInventory > 0 && OuraniaAltar.BANK_AREA.contains(Players.getLocal()) && !OuraniaAltar.allPouchesFull() && !Bank.isOpen() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina());
     }
 
     private void fillPouch(EssencePouch pouch) {

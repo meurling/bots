@@ -1,17 +1,16 @@
 package com.stixx.bots.ourania_altar.tasks;
 
-import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.script.framework.task.Task;
 import com.stixx.bots.ourania_altar.OuraniaAltar;
 
-public class ToggleRun extends Task {
+public class UpdateUI extends Task {
     @Override
     public void execute() {
-        Traversal.toggleRun();
+        //OuraniaAltar.updateInfo();
     }
 
     @Override
     public boolean validate() {
-        return OuraniaAltar.shouldTasksPause() && !Traversal.isRunEnabled() && Traversal.getRunEnergy() >= 20;
+        return (false);
     }
 }

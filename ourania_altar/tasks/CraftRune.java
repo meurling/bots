@@ -32,8 +32,8 @@ public class CraftRune extends Task {
             if (!altar.isVisible()){
                 Camera.turnTo(altar);
             } else if (altar.interact("Craft-rune")) {
-                Execution.delayUntil(()->Players.getLocal().getAnimationId() == -1, 5000);
-                Execution.delay(500, 600);
+                Execution.delayUntil(()->!Inventory.contains("Pure essence"), 2000);
+                Execution.delay(600,1000);
             }
         }
     }

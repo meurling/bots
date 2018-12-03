@@ -25,13 +25,16 @@ public class WithdrawEssence extends Task {
 
     @Override
     public boolean validate() {
-        Pattern runeRegex = Pattern.compile(".+ rune");
-        if (OuraniaAltar.OPTION_PAYMENT_RUNE == "Rune pouch") {
-            return (Bank.isOpen() && !Inventory.contains(runeRegex) && !Inventory.isFull());
+        if (OuraniaAltar.shouldTasksPause()) {
+            Pattern runeRegex = Pattern.compile(".+ rune");
+            if (OuraniaAltar.OPTION_PAYMENT_RUNE == "Rune pouch") {
+                return (Bank.isOpen() && !Inventory.contains(runeRegex) && !Inventory.isFull());
+            }
+            else {
+                return (Bank.isOpen() && Inventory.newQuery().names(runeRegex).results().size() <= 1 && !Inventory.isFull()); // must be bigger than 1 as we take the quick depoosit rune into consideration
+            }
         }
-        else {
-            return (Bank.isOpen() && Inventory.newQuery().names(runeRegex).results().size() <= 1 && !Inventory.isFull()); // must be bigger than 1 as we take the quick depoosit rune into consideration
-        }
+        return false;
     }
 
     public void withdrawEssence() {

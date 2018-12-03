@@ -20,6 +20,6 @@ public class WalkToBank extends Task {
     @Override
     public boolean validate() {
         Player player = Players.getLocal();
-        return (!OuraniaAltar.BANK_AREA.contains(player) && !Inventory.isFull() && !OuraniaAltar.RC_AREA.contains(player));
+        return (OuraniaAltar.shouldTasksPause() && !OuraniaAltar.BANK_AREA.contains(player) && !Inventory.isFull() && !OuraniaAltar.RC_AREA.contains(player));
     }
 }

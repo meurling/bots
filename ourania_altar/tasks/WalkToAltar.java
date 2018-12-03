@@ -31,10 +31,11 @@ public class WalkToAltar extends Task {
 
     @Override
     public boolean validate() {
-        return (Inventory.isFull() && !OuraniaAltar.RC_AREA.contains(Players.getLocal()) && OuraniaAltar.allPouchesFull() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina());
+        return (OuraniaAltar.shouldTasksPause() && Inventory.isFull() && !OuraniaAltar.RC_AREA.contains(Players.getLocal()) && OuraniaAltar.allPouchesFull() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina());
     }
     @Override
     public void execute() {
+        System.out.println("Walking to altar");
         Player player = Players.getLocal();
 
         if (Bank.isOpen()) {

@@ -20,7 +20,7 @@ public class WalkToLadder extends Task {
     @Override
     public boolean validate() {
         Player player = Players.getLocal();
-        return (OuraniaAltar.WALK_TO_LADDER_AREA.contains(player) || OuraniaAltar.LADDER_AREA.contains(player));
+        return (OuraniaAltar.shouldTasksPause() && (OuraniaAltar.WALK_TO_LADDER_AREA.contains(player) || OuraniaAltar.LADDER_AREA.contains(player)));
     }
 
     @Override
@@ -42,9 +42,11 @@ public class WalkToLadder extends Task {
         else if (OuraniaAltar.LADDER_AREA.contains(player) && !GameObjects.newQuery().names("Ladder").actions("Climb").results().isEmpty()) {
             GameObject ladder = GameObjects.newQuery().names("Ladder").actions("Climb").results().first();
             if (ladder.isVisible()) {
-                clickedLadder = ladder.click();
-                System.out.println("Clicked Ladder");
-                Execution.delay(200, 231);
+                if (clickedLadder) {
+                    clickedLadder = ladder.click();
+                    System.out.println("Clicked Ladder");
+                    Execution.delayUntil(() -> OuraniaAltar.BANK_AREA.contains(player));
+                }
             }
             else {
                 Camera.turnTo(ladder);

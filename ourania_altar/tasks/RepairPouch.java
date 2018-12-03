@@ -30,6 +30,6 @@ public class RepairPouch extends Task {
 
     @Override
     public boolean validate() {
-        return !OuraniaAltar.hasNoBrokenPouches() && !Bank.isOpen() && OuraniaAltar.BANK_AREA.contains(Players.getLocal())&& !OuraniaAltar.mustDrinkStamina();
+        return OuraniaAltar.shouldTasksPause() && !OuraniaAltar.hasNoBrokenPouches() && !Bank.isOpen() && OuraniaAltar.BANK_AREA.contains(Players.getLocal())&& !OuraniaAltar.mustDrinkStamina();
     }
 }
