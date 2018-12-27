@@ -9,6 +9,7 @@ import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.location.navigation.cognizant.RegionPath;
 import com.runemate.game.api.hybrid.location.navigation.web.WebPath;
+import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.task.Task;
@@ -36,19 +37,27 @@ public class WalkToAltar extends Task {
     @Override
     public void execute() {
         System.out.println("Walking to altar");
+        OuraniaAltar.currentTaskString = "Travelling to altar";
+
         Player player = Players.getLocal();
 
-        if (Bank.isOpen()) {
+        if (Bank.isOpen() && Inventory.isFull()) {
             webWalk();
         } else {
             if (OuraniaAltar.BANK_AREA.contains(player)) {
-                Player followPlayer = Players.newQuery().moving().reachable().within(firstArea).results().nearest();
-                Camera.turnTo(firstArea);
-                if (followPlayer != null) {
-                    followPlayer.interact("Follow");
-                    OuraniaAltar.followingPlayer = true;
-                    Execution.delay(200, 250);
+                LocatableEntityQueryResults<Player> results = Players.newQuery().moving().reachable().within(firstArea).results();
+                if (results.size() > 0) {
+                    Player followPlayer = results.nearest();
+                    Camera.turnTo(firstArea);
+                    if (followPlayer != null) {
+                        followPlayer.interact("Follow");
+                        OuraniaAltar.followingPlayer = true;
+                        Execution.delay(200, 250);
+                    }
+                } else {
+                    webWalk();
                 }
+
             }
 
             if (OuraniaAltar.followingPlayer) {

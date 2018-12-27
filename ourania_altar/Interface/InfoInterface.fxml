@@ -34,17 +34,17 @@
                 <RowConstraints maxHeight="217.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Flax Picked:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                <Label text="Experience Gained:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <padding>
                         <Insets right="5.0" />
                     </padding>
                 </Label>
-                <Label fx:id="FlaxPH_L" text="??" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                <Label fx:id="RcXpPh_L" text="0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                     <padding>
                         <Insets left="3.0" />
                     </padding>
                 </Label>
-                <Label text="Flax/Hour:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                <Label text="Experience per Hour:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                     <padding>
                         <Insets right="5.0" />
                     </padding>
@@ -54,19 +54,19 @@
                         <Insets right="5.0" />
                     </padding>
                 </Label>
-                <Label fx:id="FlaxCount_L" text="??" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                <Label fx:id="RcXp_L" text="0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <padding>
                         <Insets left="3.0" />
                     </padding>
                 </Label>
-                <Label fx:id="Runtime_L" text="??" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                <Label fx:id="Runtime_L" text="0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                     <padding>
                         <Insets left="3.0" />
                     </padding>
                 </Label>
             </children>
         </GridPane>
-        <Label alignment="CENTER" text="ExampleFlaxPicker" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+        <Label alignment="CENTER" text="Stixx's ZMI Altar" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <font>
                 <Font name="Marlett" size="31.0" />
             </font>
@@ -80,14 +80,13 @@
                 <RowConstraints maxHeight="42.0" minHeight="8.0" prefHeight="36.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Currently" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <Label text="Currently: " GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <padding>
                         <Insets right="5.0" />
                     </padding>
                 </Label>
-                <Label fx:id="CurrentTask_L" text="??" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <Label fx:id="CurrentTask_L" text="Starting up" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             </children>
         </GridPane>
-        <ImageView fx:id="Logo_IV" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
     </children>
 </fx:root>

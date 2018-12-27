@@ -1,6 +1,7 @@
 package com.stixx.bots.ourania_altar;
 
 import com.runemate.game.api.client.embeddable.EmbeddableUI;
+import com.runemate.game.api.hybrid.local.Skill;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.location.Area;
@@ -8,6 +9,8 @@ import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.util.Resources;
 import com.runemate.game.api.hybrid.util.StopWatch;
 import com.runemate.game.api.hybrid.util.calculations.CommonMath;
+import com.runemate.game.api.script.framework.listeners.SkillListener;
+import com.runemate.game.api.script.framework.listeners.events.SkillEvent;
 import com.runemate.game.api.script.framework.task.TaskBot;
 import com.stixx.bots.ourania_altar.CustomObjects.EssencePouch;
 import com.stixx.bots.ourania_altar.Interface.Controller;
@@ -26,7 +29,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-public class OuraniaAltar extends TaskBot implements EmbeddableUI {
+public class OuraniaAltar extends TaskBot implements EmbeddableUI, SkillListener {
 
     public static EssencePouch smallPouch = new EssencePouch("Small pouch", 3);
     public static EssencePouch mediumPouch = new EssencePouch("Medium pouch", 6);
@@ -55,9 +58,13 @@ public class OuraniaAltar extends TaskBot implements EmbeddableUI {
     public static final Area.Rectangular BANK_AREA = new Area.Rectangular(new Coordinate(3009, 5623, 0), new Coordinate(3020, 5630, 0));
     public static final Area.Rectangular RC_AREA = new Area.Rectangular(new Coordinate(3051, 5575, 0), new Coordinate(3064, 5583, 0));
 
+    public static int levelsGained;
+    public static int magicLevelsGained;
     public static int rcExperienceGained;
     public static int moneyGained;
     public static String currentTaskString;
+    public static int magicExperienceGained;
+
 
     public static StopWatch stopWatch = new StopWatch();
 
@@ -72,14 +79,52 @@ public class OuraniaAltar extends TaskBot implements EmbeddableUI {
         setLoopDelay(300, 600);
         rcExperienceGained = 0;
         moneyGained = 0;
+        levelsGained = 0;
+        magicLevelsGained = 0;
+        magicExperienceGained = 0;
+        guiWait = true;
+        botInterfaceProperty = null;
         setEmbeddableUI(this);
-        add(new UpdateUI(), new RepairPouch(), new CraftRune(), new ToggleRun(), new WalkToBank(), new EmptyPouch(), new Teleport(), new WalkToLadder(), new CloseBank(), new OpenBank(), new DepositInventory(), new FillPouch(), new WithdrawEssence(), new EatFood(), new DrinkStamina(), new WalkToAltar());
+        getEventDispatcher().addListener(this);
+        add(new WithdrawRepairRunes(), new WithdrawStamina(), new Loop(), new RepairPouch(), new CraftRune(), new ToggleRun(), new WalkToBank(), new EmptyPouch(), new Teleport(), new WalkToLadder(), new CloseBank(), new OpenBank(), new DepositInventory(), new FillPouch(), new WithdrawEssence(), new EatFood(), new DrinkStamina(), new WalkToAltar());
     }
 
     public static boolean shouldTasksPause() {
         return !guiWait;
     }
 
+
+    @Override
+    public void onExperienceGained(SkillEvent event) {
+        System.out.println("Gained experience");
+        if (event != null) {
+            if (event.getSkill() == Skill.RUNECRAFTING) {
+                rcExperienceGained += event.getChange();
+            }
+            if (event.getSkill() == Skill.MAGIC) {
+                magicExperienceGained += event.getChange();
+            }
+        }
+    }
+
+    @Override
+    public void onLevelUp(SkillEvent event) {
+        if (event != null) {
+            if (event.getSkill() == Skill.RUNECRAFTING) {
+                levelsGained++;
+            } else if (event.getSkill() == Skill.MAGIC){
+                magicLevelsGained++;
+            }
+        }
+    }
+
+    public static boolean shouldWithdrawRepairRunes() {
+        if (OPTION_PAYMENT_RUNE == "Rune pouch") {
+            return false;
+        } else {
+            return !Inventory.containsAllOf("Cosmic rune", "Air rune", "Astral rune") && OPTION_PAYMENT_RUNE != "Rune pouch" && !hasNoBrokenPouches();
+        }
+    }
 
 
     public static boolean allPouchesEmpty() {
@@ -149,15 +194,18 @@ public class OuraniaAltar extends TaskBot implements EmbeddableUI {
         }
     }
 
+
     @Override
     public ObjectProperty<? extends Node> botInterfaceProperty() {
         if (botInterfaceProperty == null) {
             botInterfaceProperty = new SimpleObjectProperty<>(userInterface = new UserInterface(this));
+            infoInterface = new InfoInterface(this);
         }
         return botInterfaceProperty;
     }
 
     public static void setToInfoProperty() {
+        System.out.println("Setting InfoUI");
         botInterfaceProperty.set(infoInterface);
         guiWait = false;
     }
@@ -167,11 +215,12 @@ public class OuraniaAltar extends TaskBot implements EmbeddableUI {
         try {
             // Assign all values to a new instance of the Info class
             info = new Info(
-                    (int) CommonMath.rate(TimeUnit.HOURS, stopWatch.getRuntime(), rcExperienceGained),  //   -   -   -   -   -   -   -   // xp per hour
-                    (int) CommonMath.rate(TimeUnit.HOURS, stopWatch.getRuntime(), moneyGained),  //   -   -   -   -   -   -   -   // gp per hour
                     rcExperienceGained,
+                    magicExperienceGained,
+                    levelsGained,
+                    magicLevelsGained,
                     moneyGained,                //    -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   // Flax Picked
-                    stopWatch.getRuntimeAsString(),                 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   // Total Runtime
+                    stopWatch,                 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   // Total Runtime
                     currentTaskString);       //    -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   // Current Task
 
         } catch (Exception e) {

@@ -17,8 +17,7 @@ public class WithdrawEssence extends Task {
     @Override
     public void execute() {
         System.out.println("Executing: WithdrwaingEssence");
-
-        withdrawStamina();
+        OuraniaAltar.currentTaskString = "Withdrawing essence";
         withdrawFood();
         withdrawEssence();
     }
@@ -31,7 +30,7 @@ public class WithdrawEssence extends Task {
                 return (Bank.isOpen() && !Inventory.contains(runeRegex) && !Inventory.isFull());
             }
             else {
-                return (Bank.isOpen() && Inventory.newQuery().names(runeRegex).results().size() <= 1 && !Inventory.isFull()); // must be bigger than 1 as we take the quick depoosit rune into consideration
+                return (Bank.isOpen() && Inventory.newQuery().names(runeRegex).results().size() <= 1 && !Inventory.isFull() && !OuraniaAltar.shouldWithdrawRepairRunes()); // must be bigger than 1 as we take the quick depoosit rune into consideration
             }
         }
         return false;
@@ -43,15 +42,6 @@ public class WithdrawEssence extends Task {
         System.out.println("Withdrew essence");
     }
 
-    public void withdrawStamina() {
-        Pattern stamina = Pattern.compile("Stamina pot.+");
-        long staminaTime = ((new Date()).getTime() - OuraniaAltar.staminaTimer) / 1000;
-        if ((staminaTime > 100 && !Inventory.contains(stamina)) || Traversal.getRunEnergy() < 20) {
-            Bank.withdraw(stamina, 1);
-            System.out.println("Withdrew Stamina");
-        }
-        Execution.delay(57, 96);
-    }
 
     public void withdrawFood() {
         Player player = Players.getLocal();

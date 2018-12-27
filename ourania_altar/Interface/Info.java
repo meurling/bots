@@ -1,5 +1,10 @@
 package com.stixx.bots.ourania_altar.Interface;
 
+import com.runemate.game.api.hybrid.util.StopWatch;
+import com.runemate.game.api.hybrid.util.calculations.CommonMath;
+
+import java.util.concurrent.TimeUnit;
+
 /*
 *
 * --- Info Class ---
@@ -11,28 +16,29 @@ package com.stixx.bots.ourania_altar.Interface;
 * the appropriate values. You do this so you can pass that newly gathered
 * information to the GUI thread, in a thread-safe manor by Platform.runLater().
 *
+* (int) CommonMath.rate(TimeUnit.HOURS, stopWatch.getRuntime(), rcExperienceGained),  //   -   -   -   -   -   -   -   // xp per hour
+                    (int) CommonMath.rate(TimeUnit.HOURS, stopWatch.getRuntime(), moneyGained),
  */
 public class Info {
 
-    public int rcXP, money, gpPh, rcXpPh;
-    public String runTime, currentTask;
+    public int rcXP, money, gpPh, rcLevels, magicXP, magicLevels, rcPh, magicPh;
+    public String runTime, currentTask, magicInfo, rcInfo, gpInfo;
 
-    public Info() {
-        this.rcXpPh = 0;
-        this.rcXP = 0;
-        this.gpPh = 0;
-        this.money = 0;
-        this.runTime = "";
-        this.currentTask = "";
-    }
 
-    public Info(int rcPh, int gpPh, int rcXp, int money, String runTime, String currentTask) {
-        this.rcXpPh = rcPh;
-        this.gpPh = gpPh;
-        this.rcXP = rcXp;
+    public Info(int rcXP, int magicXP, int rcLevels, int magicLevels, int money, StopWatch stopWatch, String currentTask) {
+        this.rcXP = rcXP;
+        this.magicXP = magicXP;
+        this.rcLevels = rcLevels;
+        this.magicLevels = magicLevels;
         this.money = money;
-        this.runTime = runTime;
+        this.runTime = stopWatch.getRuntimeAsString();
         this.currentTask = currentTask;
+
+        this.rcPh = (int) CommonMath.rate(TimeUnit.HOURS, stopWatch.getRuntime(), rcXP);
+        this.magicPh = (int) CommonMath.rate(TimeUnit.HOURS, stopWatch.getRuntime(), magicXP);
+        this.gpPh = (int) CommonMath.rate(TimeUnit.HOURS, stopWatch.getRuntime(), money);
+
     }
+
 
 }

@@ -4,6 +4,7 @@ import com.runemate.game.api.hybrid.entities.Npc;
 import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.local.Camera;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
+import com.runemate.game.api.hybrid.local.hud.interfaces.ChatDialog;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
@@ -18,7 +19,7 @@ public class OpenBank extends Task {
     @Override
     public void execute() {
         System.out.println("Executing: OpenBank");
-
+        OuraniaAltar.currentTaskString = "Opening Bank";
         Npc banker = Npcs.newQuery().names("Eniola").results().first();
         if (banker != null) {
             if (banker.isVisible() && !Bank.isOpen()) {
@@ -33,9 +34,8 @@ public class OpenBank extends Task {
 
     @Override
     public boolean validate() {
-        System.out.println("lopping: " + OuraniaAltar.OPTION_ESSENCEPOUCH);
         Player player = Players.getLocal();
-        return (OuraniaAltar.BANK_AREA.contains(player) && OuraniaAltar.shouldTasksPause() && !Inventory.isFull() && !Inventory.contains(OuraniaAltar.OPTION_FOOD) && !Bank.isOpen() && !canStillFillPouches() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina());
+        return ChatDialog.getContinue() == null && (!OuraniaAltar.hasNoBrokenPouches() && OuraniaAltar.shouldWithdrawRepairRunes() || (OuraniaAltar.BANK_AREA.contains(player) && OuraniaAltar.shouldTasksPause() && !Inventory.isFull() && !Inventory.contains(OuraniaAltar.OPTION_FOOD) && !Bank.isOpen() && !canStillFillPouches() && OuraniaAltar.hasNoBrokenPouches() && !OuraniaAltar.mustDrinkStamina()));
     }
 
     private boolean canStillFillPouches() {

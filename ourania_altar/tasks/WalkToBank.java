@@ -11,6 +11,7 @@ import com.stixx.bots.ourania_altar.OuraniaAltar;
 public class WalkToBank extends Task {
     @Override
     public void execute() {
+        OuraniaAltar.currentTaskString = "Walking to bank area";
         final WebPath path = Traversal.getDefaultWeb().getPathBuilder().buildTo(OuraniaAltar.BANK_AREA);
         if (path!= null) {
             path.step();

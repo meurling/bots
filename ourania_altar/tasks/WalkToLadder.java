@@ -26,7 +26,7 @@ public class WalkToLadder extends Task {
     @Override
     public void execute() {
         System.out.println("Executing: WalkToLadder");
-
+        OuraniaAltar.currentTaskString = "walking to ladder";
         Player player = Players.getLocal();
         // walk to ladder
         if (OuraniaAltar.WALK_TO_LADDER_AREA.contains(player) && !player.isMoving()) {

@@ -15,6 +15,8 @@ public class RepairPouch extends Task {
     @Override
     public void execute() {
         System.out.println("Execute: Reparing pouch");
+        OuraniaAltar.currentTaskString = "Repairing pouches";
+
         Player player = Players.getLocal();
         ChatDialog.Continue cont = ChatDialog.getContinue();
         if (cont != null) {
@@ -30,6 +32,10 @@ public class RepairPouch extends Task {
 
     @Override
     public boolean validate() {
-        return OuraniaAltar.shouldTasksPause() && !OuraniaAltar.hasNoBrokenPouches() && !Bank.isOpen() && OuraniaAltar.BANK_AREA.contains(Players.getLocal())&& !OuraniaAltar.mustDrinkStamina();
+        boolean hasRunes = true;
+        if (OuraniaAltar.OPTION_PAYMENT_RUNE != "Rune pouch") {
+            hasRunes = Inventory.containsAllOf("Cosmic rune", "Air rune", "Astral rune");
+        }
+        return OuraniaAltar.shouldTasksPause() && !OuraniaAltar.hasNoBrokenPouches() && !Bank.isOpen() && OuraniaAltar.BANK_AREA.contains(Players.getLocal()) && hasRunes || ChatDialog.getContinue() != null;
     }
 }

@@ -13,7 +13,7 @@ public class FillPouch extends Task {
     @Override
     public void execute() {
         System.out.println("Executing: FillPouch");
-
+        OuraniaAltar.currentTaskString = "Filling pouches";
         int essenceInventory = Inventory.newQuery().names("Pure essence").results().size();
         if (essenceInventory > 0) {
             switch (OuraniaAltar.OPTION_ESSENCEPOUCH) {

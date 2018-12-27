@@ -89,7 +89,7 @@ public class Controller implements Initializable {
 
 
                 // Set the EmbeddableUI property to reflect your Info GUI
-               // Platform.runLater(() -> OuraniaAltar.setToInfoProperty() );
+                Platform.runLater(() -> OuraniaAltar.setToInfoProperty() );
 
             } catch (Exception e) {
                 e.printStackTrace();

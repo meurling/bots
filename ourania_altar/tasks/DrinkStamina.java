@@ -26,6 +26,6 @@ public class DrinkStamina extends Task {
 
     @Override
     public boolean validate() {
-        return (!Bank.isOpen() && OuraniaAltar.hasNoBrokenPouches() && OuraniaAltar.mustDrinkStamina());
+        return (!Bank.isOpen() && OuraniaAltar.hasNoBrokenPouches() && OuraniaAltar.mustDrinkStamina() && OuraniaAltar.shouldTasksPause());
     }
 }

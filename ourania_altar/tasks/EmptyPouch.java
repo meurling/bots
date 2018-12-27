@@ -12,29 +12,24 @@ import com.stixx.bots.ourania_altar.OuraniaAltar;
 
 public class EmptyPouch extends Task{
 
-    public EssencePouch[] essencePouches;
-    public int option;
 
     private String giantPouch = "Giant pouch";
     private String largePouch = "Large pouch";
     private String mediumPouch = "Medium pouch";
     private String smallPouch = "Small pouch";
 
-    public EmptyPouch() {
-        this.essencePouches = OuraniaAltar.essencePouches;
-        this.option = OuraniaAltar.OPTION_ESSENCEPOUCH;
-    }
+
     @Override
     public boolean validate() {
         // make sure there are pouches to empty
-        boolean valid = !GameObjects.newQuery().names("Runecrafting altar").results().isEmpty() && OuraniaAltar.RC_AREA.contains(Players.getLocal()) && OuraniaAltar.canEmptyPouch();
+        boolean valid = OuraniaAltar.RC_AREA.contains(Players.getLocal()) && OuraniaAltar.canEmptyPouch() && OuraniaAltar.shouldTasksPause();
         return valid;
     }
 
     @Override
     public void execute() {
         System.out.println("Executing: EmptyPouch");
-        switch (option) {
+        switch (OuraniaAltar.OPTION_ESSENCEPOUCH) {
             case (0):
                 // dont empty pouches
             case (1):
@@ -52,14 +47,12 @@ public class EmptyPouch extends Task{
                 // empty upto giant
                 emptyPouch(3);
                 emptyPouch(0);
-                if (!OuraniaAltar.giantPouch.hasEssenceInPouch() && !OuraniaAltar.smallPouch.hasEssenceInPouch()) {
-                    emptyPouch(2);
-                    emptyPouch(1);
-                }
+                emptyPouch(2);
+                emptyPouch(1);
         }
     }
     private void emptyPouch(int essencePouch) {
-        EssencePouch pouch = essencePouches[essencePouch];
+        EssencePouch pouch = OuraniaAltar.essencePouches[essencePouch];
         if (pouch.canEmptyPouch()) {
             Keyboard.pressKey(16); // hold shift
             if (Keyboard.isPressed(16)) {
@@ -67,9 +60,8 @@ public class EmptyPouch extends Task{
                 if (item.click()) {
                     OuraniaAltar.essencePouches[essencePouch].setHasEssenceInPouch(false);
                     System.out.println(pouch.getName() + " Was emptied");
-                    Execution.delay(31, 49);
                     Keyboard.releaseKey(16);
-                    Execution.delayUntil(() -> Inventory.contains("Pure essence"), 600, 900);
+                    Execution.delay(100, 300);
                 }
             }
         }

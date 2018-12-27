@@ -22,16 +22,16 @@ public class Teleport extends Task {
     public boolean validate() {
         Player player = Players.getLocal();
 
-        boolean valid = (OuraniaAltar.shouldTasksPause() && OuraniaAltar.allPouchesEmpty() && OuraniaAltar.RC_AREA.contains(player) && player.getAnimationId() == -1 && !Inventory.contains("Pure essence"));
+        boolean valid = (!Inventory.contains("Pure essence") && OuraniaAltar.shouldTasksPause() && OuraniaAltar.allPouchesEmpty() && OuraniaAltar.RC_AREA.contains(player) && player.getAnimationId() == -1 && !Inventory.contains("Pure essence"));
         return valid;
     }
 
     @Override
     public void execute() {
-        if (!Inventory.contains("Pure essence")) {
-            System.out.println("Executing: Teleporting");
-            Magic.Lunar.OURANIA_TELEPORT.activate();
-            Execution.delayUntil(()->!OuraniaAltar.RC_AREA.contains(Players.getLocal()), 3000);
-        }
+        OuraniaAltar.currentTaskString = "Teleporting";
+        System.out.println("Executing: Teleporting");
+        Magic.Lunar.OURANIA_TELEPORT.activate();
+        Execution.delayUntil(()->!OuraniaAltar.RC_AREA.contains(Players.getLocal()), 3000);
+
     }
 }

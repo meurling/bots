@@ -11,6 +11,7 @@ public class DepositInventory extends Task {
     @Override
     public void execute() {
         System.out.println("Executing: DepositInventory");
+        OuraniaAltar.currentTaskString = "Depositing inventory";
         if (Bank.isOpen()) {
             Bank.depositInventory();
             System.out.println("Deposited inventory");
@@ -24,7 +25,7 @@ public class DepositInventory extends Task {
             return (Bank.isOpen() && Inventory.contains(runeRegex));
         }
         else {
-            return (Bank.isOpen() && Inventory.newQuery().names(runeRegex).results().size() > 1); // must be bigger than 1 as we take the quick depoosit rune into consideration
+            return Bank.isOpen() && Inventory.newQuery().names(runeRegex).results().size() > 1 && OuraniaAltar.hasNoBrokenPouches(); // must be bigger than 1 as we take the quick depoosit rune into consideration
         }
     }
 }

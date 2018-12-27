@@ -20,7 +20,7 @@ public class InfoInterface extends GridPane implements Initializable {
     private OuraniaAltar bot;
 
     @FXML
-    Label FlaxPH_L, FlaxCount_L, Runtime_L, CurrentTask_L, RcXpPh_L, RcXp_L, GpPh_L,Money_L;
+    Label Runtime_L, CurrentTask_L, RcXpPh_L, GpPh_L,Money_L, RcXp_L, MagicXp_L, MagicXpPh_L, RcLevels_L, MagicLevels_L;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,23 +47,31 @@ public class InfoInterface extends GridPane implements Initializable {
         try {
             loader.load(stream.get());
         } catch (IOException | InterruptedException | ExecutionException e) {
+            System.out.println("Error Infoi nterface");
             e.printStackTrace();
         }
     }
 
     // This method will update the text that is presented to the end user
     public void update() {
+
         try {
             Info i = bot.info;
 
-            Money_L.textProperty().set("" + i.money);
-            GpPh_L.textProperty().set("" + i.gpPh);
-            RcXpPh_L.textProperty().set("" + i.rcXpPh);
+            RcXpPh_L.textProperty().set("" + i.rcPh);
             RcXp_L.textProperty().set("" + i.rcXP);
             Runtime_L.textProperty().set("" + i.runTime);
             CurrentTask_L.textProperty().set(i.currentTask);
-
+/*
+            Money_L.textProperty().set("" + i.money);
+            GpPh_L.textProperty().set("" + i.gpPh);
+            RcLevels_L.textProperty().set("" + i.rcLevels);
+            MagicLevels_L.textProperty().set("" + i.magicLevels);
+            MagicXp_L.textProperty().set("" + i.magicXP);
+            MagicXpPh_L.textProperty().set("" + i.magicPh);
+*/
         }catch(Exception e){
+            System.out.println(" error In InfoInterface");
             e.printStackTrace();
         }
     }
