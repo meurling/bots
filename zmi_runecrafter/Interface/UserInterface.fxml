@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" type="javafx.scene.layout.GridPane" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+
+   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="758.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+      <children>
+         <Text layoutX="144.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Smexy ZMI-RuneCrafter">
+            <fill>
+               <LinearGradient endX="1.0" startX="1.0">
+                  <stops>
+                     <Stop color="#9e13bfed" />
+                     <Stop color="#7a16a6" offset="0.5165303945965162" />
+                     <Stop color="WHITE" offset="1.0" />
+                  </stops>
+               </LinearGradient>
+            </fill>
+            <font>
+               <Font name="Ebrima" size="30.0" />
+            </font>
+         </Text>
+         <Text layoutX="171.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check forums for guide on how to run bot">
+            <font>
+               <Font name="System Italic" size="14.0" />
+            </font>
+         </Text>
+         <Text layoutX="266.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" underline="true">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Text>
+         <Text layoutX="249.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Essence pouches:" underline="true" wrappingWidth="113.873046875">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <HBox alignment="CENTER" layoutX="33.0" layoutY="268.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="538.0" spacing="10.0">
+            <children>
+               <CheckBox fx:id="Small_Pouch" mnemonicParsing="false" text="Small pouch" />
+               <CheckBox fx:id="Medium_Pouch" mnemonicParsing="false" text="Medium pouch" />
+               <CheckBox fx:id="Large_Pouch" mnemonicParsing="false" text="Large pouch" />
+               <CheckBox fx:id="Giant_Pouch" mnemonicParsing="false" text="Large pouch" />
+            </children>
+         </HBox>
+         <Text layoutX="261.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select route:" underline="true" wrappingWidth="87.0">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <ComboBox fx:id="Route_Box" layoutX="231.0" layoutY="208.0" prefWidth="150.0" />
+         <Text layoutX="242.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Using Rune pouch?" underline="true" wrappingWidth="126.873046875">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <ComboBox fx:id="RunePouch_Box" layoutX="231.0" layoutY="315.0" prefWidth="150.0" />
+         <Text layoutX="225.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Runes in inventory:" underline="true" wrappingWidth="161.873046875">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <HBox alignment="CENTER" layoutX="25.0" layoutY="366.0" prefHeight="27.0" prefWidth="545.0" spacing="10.0">
+            <children>
+               <CheckBox mnemonicParsing="false" text="Air" />
+               <CheckBox mnemonicParsing="false" text="Earth" />
+               <CheckBox mnemonicParsing="false" text="Dust" />
+               <CheckBox mnemonicParsing="false" text="Law" />
+               <CheckBox mnemonicParsing="false" text="Astral" />
+               <CheckBox mnemonicParsing="false" text="Cosmic" />
+               <CheckBox mnemonicParsing="false" text="Fire" />
+            </children>
+         </HBox>
+         <Text layoutX="243.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Using Staminas?" underline="true" wrappingWidth="126.873046875">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <ComboBox fx:id="Stamina_Box" layoutX="227.0" layoutY="420.0" prefWidth="150.0" />
+         <Text layoutX="202.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Runes in covered by staff:" underline="true" wrappingWidth="208.873046875">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <HBox alignment="CENTER" layoutX="16.0" layoutY="472.0" prefHeight="25.0" prefWidth="563.0" spacing="10.0">
+            <children>
+               <CheckBox mnemonicParsing="false" text="Air" />
+               <CheckBox mnemonicParsing="false" text="Earth" />
+            </children>
+         </HBox>
+         <Text layoutX="263.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Food:" underline="true" wrappingWidth="87.0">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <ComboBox fx:id="Food_Box" layoutX="230.0" layoutY="517.0" prefWidth="150.0" />
+         <Text layoutX="236.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Use Ourania Teleport?" underline="true" wrappingWidth="141.873046875">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <ComboBox fx:id="Teleport_Box" layoutX="229.0" layoutY="571.0" prefWidth="150.0" />
+         <Button fx:id="Start_Button" disable="true" layoutX="258.0" layoutY="639.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="112.0" text="Start" textFill="#6f0852">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Button>
+      </children>
+   </AnchorPane>
+</fx:root>

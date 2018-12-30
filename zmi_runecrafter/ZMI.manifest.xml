@@ -1,0 +1,27 @@
+<manifest>
+    <main-class>com.stixx.bots.zmi_runecrafter.ZMI</main-class>
+    <name> NEWWW Stixx's ZMI Altar RuneCrafter [BETA]</name>
+    <tag-line>Crafts rune at the ZMI altar!</tag-line><!--Max of 50 chars-->
+    <description>RuneCrafting made easy! 30k xp/h, 400k gp/h</description><!--Max of 110 chars-->
+    <version>1.0.2</version>
+    <compatibility>
+        <game>OSRS</game>
+    </compatibility>
+    <categories>
+        <category>RUNECRAFTING</category>
+    </categories>
+    <!--Required to publish on the bot store-->
+    <internal-id>ZMI RuneCrafter</internal-id>
+    <!--The rest are optional-->
+    <open-source>false</open-source>
+    <hidden>false</hidden> <!--If you need to hide it from the bot store for maintenance-->
+    <access>public</access>
+    <tags>
+        <tag>RuneCrafting</tag>
+        <tag>Money</tag>
+    </tags>
+    <resources>
+        <resource>com/stixx/bots/zmi_runecrafter/Interface/InfoInterface.fxml</resource>
+        <resource>com/stixx/bots/zmi_runecrafter/Interface/UserInterface.fxml</resource>
+    </resources>
+</manifest>

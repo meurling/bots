@@ -1,7 +1,7 @@
-package com.stixx.bots.ourania_altar.Interface;
+package com.stixx.bots.zmi_runecrafter.Interface;
 
 import com.runemate.game.api.hybrid.util.Resources;
-import com.stixx.bots.ourania_altar.OuraniaAltar;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
@@ -13,36 +13,41 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-/**
- * Java FX Gui for configuring exampleflaxpicker bot settings
- */
-public class UserInterface extends GridPane implements Initializable {
+public class InfoInterface extends GridPane implements Initializable {
+
+    private ZMI bot;
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(URL location, ResourceBundle resources) {
         setVisible(true);
     }
 
-    public UserInterface(OuraniaAltar bot) {
+    public InfoInterface(ZMI bot) {
+        this.bot = bot;
+
         // Load the fxml file using RuneMate's resources class.
         FXMLLoader loader = new FXMLLoader();
 
-        // Input your Settings GUI FXML file location here.
+        // Input your InfoUI FXML file location here.
         // NOTE: DO NOT FORGET TO ADD IT TO MANIFEST AS A RESOURCE
-        Future<InputStream> stream = bot.getPlatform().invokeLater(() -> Resources.getAsStream("com/stixx/bots/ourania_altar/Interface/UserInterface.fxml"));
+        Future<InputStream> stream = bot.getPlatform().invokeLater(() -> Resources.getAsStream("com/stixx/bots/zmi_runecrafter/Interface/InfoInterface.fxml"));
 
-        // Set FlaxFXController as the class that will be handling our events
-        loader.setController(new Controller());
 
-        // Set the FXML load's root to this class
+        // Set this class as root AND Controller for the Java FX GUI
+        loader.setController(this);
+
         // NOTE: By setting the root to (this) you must change your .fxml to reflect fx:root
         loader.setRoot(this);
 
         try {
             loader.load(stream.get());
         } catch (IOException | InterruptedException | ExecutionException e) {
-            System.err.println("Error loading GUI");
+            System.out.println("Error Infoi nterface");
             e.printStackTrace();
         }
+    }
+
+    public void update() {
+
     }
 }

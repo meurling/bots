@@ -10,6 +10,6 @@ public class EmptyLeaf extends LeafTask {
 
     @Override
     public void execute() {
-
+        System.out.println("Empty leaf reached");
     }
 }

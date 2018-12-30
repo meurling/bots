@@ -1,7 +1,7 @@
-package com.stixx.bots.ourania_altar.Interface;
+package com.stixx.bots.zmi_runecrafter.Interface;
 
 import com.runemate.game.api.hybrid.util.Resources;
-import com.stixx.bots.ourania_altar.OuraniaAltar;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
@@ -13,9 +13,6 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-/**
- * Java FX Gui for configuring exampleflaxpicker bot settings
- */
 public class UserInterface extends GridPane implements Initializable {
 
     @Override
@@ -23,16 +20,16 @@ public class UserInterface extends GridPane implements Initializable {
         setVisible(true);
     }
 
-    public UserInterface(OuraniaAltar bot) {
+    public UserInterface(ZMI bot) {
         // Load the fxml file using RuneMate's resources class.
         FXMLLoader loader = new FXMLLoader();
 
         // Input your Settings GUI FXML file location here.
         // NOTE: DO NOT FORGET TO ADD IT TO MANIFEST AS A RESOURCE
-        Future<InputStream> stream = bot.getPlatform().invokeLater(() -> Resources.getAsStream("com/stixx/bots/ourania_altar/Interface/UserInterface.fxml"));
+        Future<InputStream> stream = bot.getPlatform().invokeLater(() -> Resources.getAsStream("com/stixx/bots/zmi_runecrafter/Interface/UserInterface.fxml"));
 
         // Set FlaxFXController as the class that will be handling our events
-        loader.setController(new Controller());
+        loader.setController(new Controller(bot));
 
         // Set the FXML load's root to this class
         // NOTE: By setting the root to (this) you must change your .fxml to reflect fx:root
