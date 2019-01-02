@@ -33,6 +33,6 @@ public class CanDrinkStamina extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return new FillPouch(bot);
+        return new DrinkStamina(bot);
     }
 }

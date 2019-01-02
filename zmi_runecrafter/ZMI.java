@@ -4,7 +4,10 @@ import com.runemate.game.api.client.embeddable.EmbeddableUI;
 import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.location.Area;
 import com.runemate.game.api.hybrid.location.Coordinate;
+import com.runemate.game.api.hybrid.util.StopWatch;
+import com.runemate.game.api.script.framework.listeners.VarbitListener;
 import com.runemate.game.api.script.framework.listeners.VarpListener;
+import com.runemate.game.api.script.framework.listeners.events.VarbitEvent;
 import com.runemate.game.api.script.framework.listeners.events.VarpEvent;
 import com.runemate.game.api.script.framework.tree.TreeBot;
 import com.runemate.game.api.script.framework.tree.TreeTask;
@@ -18,7 +21,7 @@ import javafx.scene.Node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZMI extends TreeBot implements EmbeddableUI {
+public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener {
 
     //---------------BRANCHES---------------//
     //---------------BRANCHES---------------//
@@ -54,6 +57,9 @@ public class ZMI extends TreeBot implements EmbeddableUI {
 
     //---------------VARIABLES---------------//
         public Player player;
+        public StopWatch staminaTimer = new StopWatch();
+        public boolean staminaActive = false;
+        public StopWatch runTime = new StopWatch();
     //---------------VARIABLES---------------//
 
     //---------------AREAS---------------//
@@ -67,6 +73,7 @@ public class ZMI extends TreeBot implements EmbeddableUI {
         botInterfaceProperty = null;
         helper = new Helper(this);
         setEmbeddableUI(this);
+        runTime.start();
     }
     /*
     @Override
@@ -104,5 +111,21 @@ public class ZMI extends TreeBot implements EmbeddableUI {
 
     public void updateInfo() {
 
+    }
+
+    @Override
+    public void onValueChanged(VarbitEvent varbitEvent) {
+        int varbit = varbitEvent.getVarbit().getId();
+        int oldValue = varbitEvent.getOldValue();
+        int newValue = varbitEvent.getNewValue();
+        switch (varbit) {
+            case 25: // Stamina
+                if (newValue == 1) {
+                    staminaActive = true;
+                    staminaTimer.reset();
+                } else if (newValue == 0) {
+                    staminaActive = false;
+                }
+        }
     }
 }

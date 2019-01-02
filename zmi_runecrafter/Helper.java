@@ -1,6 +1,8 @@
 package com.stixx.bots.zmi_runecrafter;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Health;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
+import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.osrs.local.RunePouch;
 
 import java.util.ArrayList;
@@ -12,6 +14,17 @@ public class Helper {
 
     public Helper(ZMI bot) {
         this.bot = bot;
+    }
+
+    public boolean timeForFood() {
+        return Health.getCurrentPercent() < 50;
+    }
+
+    public boolean timeForStamina() {
+        if (bot.SETTING_USE_STAMINA) {
+            return !bot.staminaActive || Traversal.getRunEnergy() < 19 || bot.staminaTimer.getRuntime() /1000 > 105;
+
+        } else return false;
     }
 
     public boolean inventoryHasUnwantedRunes() {

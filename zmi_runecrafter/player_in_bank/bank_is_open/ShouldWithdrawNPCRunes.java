@@ -20,7 +20,8 @@ public class ShouldWithdrawNPCRunes extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        String[] runes ={"Air rune", "Cosmic rune", "Astral rune"};
+        return bot.helper.hasDegradedPouch() && bot.helper.getMissingRunes(runes).size() > 0;
     }
 
     @Override

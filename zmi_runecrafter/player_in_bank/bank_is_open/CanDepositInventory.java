@@ -1,8 +1,11 @@
 package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_open;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
+
+import java.util.regex.Pattern;
 
 // import path.to.your.DepositInventory
 // import path.to.your.ShouldWithdrawStamina
@@ -21,7 +24,7 @@ public class CanDepositInventory extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.helper.inventoryHasUnwantedRunes();
     }
 
     @Override

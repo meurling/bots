@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class DrinkStamina extends Task {
     @Override
     public void execute() {
-        System.out.println("Executing: DrinkStamina");
+        System.out.println("Executing: DrinkStamina.java");
 
         Pattern stamina = Pattern.compile("Stamina pot.+");
         SpriteItem potion = Inventory.newQuery().names(stamina).results().first();
