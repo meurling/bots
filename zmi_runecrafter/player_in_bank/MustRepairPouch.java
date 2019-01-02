@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_in_bank;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.MustEatFood;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.repair_pouches.IsContactingDarkMage;
 
@@ -14,21 +15,24 @@ import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.repair_pouch
  */
 public class MustRepairPouch extends BranchTask {
 
-    private IsContactingDarkMage iscontactingdarkmage = new IsContactingDarkMage();
-    private MustEatFood musteatfood = new MustEatFood();
+    private ZMI bot;
+    public MustRepairPouch(ZMI bot) {
+        this.bot = bot;
+    }
+
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.helper.hasDegradedPouch();
     }
 
     @Override
     public TreeTask failureTask() {
-        return musteatfood;
+        return new MustEatFood(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return iscontactingdarkmage;
+        return new IsContactingDarkMage(bot);
     }
 }

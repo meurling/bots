@@ -37,22 +37,11 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("am1");
-
         Stamina_Box.getItems().addAll("Yes", "No");
-        System.out.println("am2");
-
         Route_Box.getItems().addAll("Fast route", "Slow route");
-        System.out.println("am3");
-
         Teleport_Box.getItems().addAll("Yes", "No");
-        System.out.println("am4");
-
         Food_Box.getItems().addAll("Monkfish", "Trout", "Salmon", "Lobster", "Tuna");
-        System.out.println("am5");
-
         RunePouch_Box.getItems().addAll("Yes", "No");
-        System.out.println("am6");
 
 
         Start_Button.setOnAction(Start_Button_Click());
@@ -157,13 +146,13 @@ public class Controller implements Initializable {
         if (Small_Pouch.isSelected()) {
             bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Small pouch", 3));
         }
-        if (Small_Pouch.isSelected()) {
+        if (Medium_Pouch.isSelected()) {
             bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Medium pouch", 6));
         }
-        if (Small_Pouch.isSelected()) {
+        if (Large_Pouch.isSelected()) {
             bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Large pouch", 9));
         }
-        if (Small_Pouch.isSelected()) {
+        if (Giant_Pouch.isSelected()) {
             bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Giant pouch", 12));
         }
     }

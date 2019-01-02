@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 
 // import path.to.your.ShouldStopFollow
 
@@ -11,7 +12,11 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
  */
 public class IsFollowingPlayer extends BranchTask {
 
-    private ShouldStopFollow shouldstopfollow = new ShouldStopFollow();
+    private ZMI bot;
+    public IsFollowingPlayer(ZMI bot) {
+        this.bot =bot;
+    }
+
 
     @Override
     public boolean validate() {
@@ -25,6 +30,6 @@ public class IsFollowingPlayer extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return shouldstopfollow;
+        return new ShouldStopFollow(bot);
     }
 }

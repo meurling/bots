@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_not_in_bank.altar_area;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 
 // import path.to.your.CraftRune
 // import path.to.your.ShouldTeleport
@@ -12,8 +13,10 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
  */
 public class HasEssence extends BranchTask {
 
-    private CraftRune craftrune = new CraftRune();
-    private ShouldTeleport shouldteleport = new ShouldTeleport();
+    private ZMI bot;
+    public HasEssence(ZMI bot) {
+        this.bot =bot;
+    }
 
     @Override
     public boolean validate() {
@@ -22,11 +25,11 @@ public class HasEssence extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return shouldteleport;
+        return new ShouldTeleport(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return craftrune;
+        return new CraftRune(bot);
     }
 }

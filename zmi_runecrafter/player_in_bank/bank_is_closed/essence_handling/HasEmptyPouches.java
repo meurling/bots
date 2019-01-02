@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.essence_han
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.IsInventoryFull;
 
 // import path.to.your.CanFillPouch
@@ -13,8 +14,11 @@ import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.IsInventoryF
  */
 public class HasEmptyPouches extends BranchTask {
 
-    private CanFillPouch canfillpouch = new CanFillPouch();
-    private IsInventoryFull isinventoryfull = new IsInventoryFull();
+    private ZMI bot;
+    public HasEmptyPouches(ZMI bot) {
+        this.bot = bot;
+    }
+
 
     @Override
     public boolean validate() {
@@ -23,11 +27,11 @@ public class HasEmptyPouches extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return isinventoryfull;
+        return new IsInventoryFull(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return canfillpouch;
+        return new CanFillPouch(bot);
     }
 }

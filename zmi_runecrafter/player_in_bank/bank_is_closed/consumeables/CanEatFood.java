@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.consumeable
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.OpenBank;
 
 // import path.to.your.EatFood
@@ -13,8 +14,10 @@ import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.OpenBank;
  */
 public class CanEatFood extends BranchTask {
 
-    private EatFood eatfood = new EatFood();
-    private OpenBank openbank = new OpenBank();
+    private ZMI bot;
+    public CanEatFood(ZMI bot) {
+        this.bot = bot;
+    }
 
     @Override
     public boolean validate() {
@@ -23,11 +26,11 @@ public class CanEatFood extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return openbank;
+        return new OpenBank(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return eatfood;
+        return new EatFood(bot);
     }
 }

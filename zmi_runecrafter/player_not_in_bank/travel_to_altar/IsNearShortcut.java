@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 
 // import path.to.your.ClickShortcutToAltar
 // import path.to.your.WalkToShortcut
@@ -12,8 +13,10 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
  */
 public class IsNearShortcut extends BranchTask {
 
-    private ClickShortcutToAltar clickshortcuttoaltar = new ClickShortcutToAltar();
-    private WalkToShortcut walktoshortcut = new WalkToShortcut();
+    private ZMI bot;
+    public IsNearShortcut(ZMI bot) {
+        this.bot =bot;
+    }
 
     @Override
     public boolean validate() {
@@ -22,11 +25,11 @@ public class IsNearShortcut extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return walktoshortcut;
+        return new WalkToShortcut(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return clickshortcuttoaltar;
+        return new ClickShortcutToAltar(bot);
     }
 }

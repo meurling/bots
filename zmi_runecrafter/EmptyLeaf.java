@@ -8,6 +8,12 @@ import com.runemate.game.api.script.framework.tree.LeafTask;
  */
 public class EmptyLeaf extends LeafTask {
 
+    private ZMI bot;
+    public EmptyLeaf(ZMI bot) {
+        this.bot =bot;
+    }
+
+
     @Override
     public void execute() {
         System.out.println("Empty leaf reached");

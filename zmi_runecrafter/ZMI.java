@@ -2,6 +2,8 @@ package com.stixx.bots.zmi_runecrafter;
 
 import com.runemate.game.api.client.embeddable.EmbeddableUI;
 import com.runemate.game.api.hybrid.entities.Player;
+import com.runemate.game.api.hybrid.location.Area;
+import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.script.framework.listeners.VarpListener;
 import com.runemate.game.api.script.framework.listeners.events.VarpEvent;
 import com.runemate.game.api.script.framework.tree.TreeBot;
@@ -13,6 +15,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ZMI extends TreeBot implements EmbeddableUI {
@@ -22,9 +25,9 @@ public class ZMI extends TreeBot implements EmbeddableUI {
 
 
     //---------------SETTINGS---------------//
-        public List<EssencePouch> SETTING_ESSENCE_POUCHES;
-        public List<String> SETTING_STAFF_RUNES;
-        public List<String> SETTING_INVENTORY_RUNES;
+        public List<EssencePouch> SETTING_ESSENCE_POUCHES = new ArrayList<EssencePouch>();
+        public List<String> SETTING_STAFF_RUNES = new ArrayList<String>();
+        public List<String> SETTING_INVENTORY_RUNES = new ArrayList<String>();
         public boolean SETTING_USE_STAMINA;
         public boolean SETTING_USE_FAST_ROUTE;
         public boolean SETTING_USE_RUNEPOUCH;
@@ -39,6 +42,7 @@ public class ZMI extends TreeBot implements EmbeddableUI {
         public int moneyGained;
         public String currentTaskString;
         public int magicExperienceGained;
+        public Helper helper;
     //---------------RUN_TIME---------------//
 
     //---------------GUIs---------------//
@@ -52,12 +56,16 @@ public class ZMI extends TreeBot implements EmbeddableUI {
         public Player player;
     //---------------VARIABLES---------------//
 
+    //---------------AREAS---------------//
+        public Area BANK_AREA = new Area.Rectangular(new Coordinate(3009, 5624, 0), new Coordinate(3021, 5630, 0));
+    //---------------AREAS---------------//
 
     @Override
     public void onStart(String... arguments) {
         super.onStart(arguments);
         currentTaskString = "Starting up...";
         botInterfaceProperty = null;
+        helper = new Helper(this);
         setEmbeddableUI(this);
     }
     /*
@@ -82,6 +90,15 @@ public class ZMI extends TreeBot implements EmbeddableUI {
 
     public void setToInfoProperty() {
         System.out.println("Setting InfoUI");
+        System.out.println("Settings:");
+        System.out.println("Stamina: " + SETTING_USE_STAMINA);
+        System.out.println("Ivnentory: " + SETTING_INVENTORY_RUNES.toString());
+        System.out.println("STAFF: " + SETTING_STAFF_RUNES.toString());
+        System.out.println("Pouches: " + SETTING_ESSENCE_POUCHES.toString());
+        System.out.println("RunePouch: " + SETTING_USE_RUNEPOUCH);
+        System.out.println("Route: " + SETTING_USE_FAST_ROUTE);
+        System.out.println("Food: " + SETTING_FOOD);
+        System.out.println("Teleport: " + SETTING_USE_TELEPORT);
         botInterfaceProperty.set(infoInterface);
     }
 

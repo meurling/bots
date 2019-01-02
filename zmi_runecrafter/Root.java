@@ -18,19 +18,22 @@ public class Root extends BranchTask {
         this.bot = bot;
     }
 
-    IsPlayerInBank isPlayerInBank = new IsPlayerInBank(bot);
 
     @Override
     public TreeTask failureTask() {
+        if (bot == null) {
+            System.out.println("Bot is null");
+        }
         bot.player = Players.getLocal();
         bot.updateInfo();
-        return isPlayerInBank;
+        System.out.println("Currently: " + bot.currentTaskString);
+        return new IsPlayerInBank(bot);
     }
 
     @Override
     public TreeTask successTask() {
         System.out.println("Waiting for configs");
-        return new EmptyLeaf();
+        return new EmptyLeaf(bot);
     }
 
     @Override

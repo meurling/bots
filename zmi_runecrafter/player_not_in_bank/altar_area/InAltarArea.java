@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_not_in_bank.altar_area;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_not_in_bank.ladder_area.InLadderArea;
 
 // import path.to.your.CanEmptyPouch
@@ -13,8 +14,11 @@ import com.stixx.bots.zmi_runecrafter.player_not_in_bank.ladder_area.InLadderAre
  */
 public class InAltarArea extends BranchTask {
 
-    private CanEmptyPouch canemptypouch = new CanEmptyPouch();
-    private InLadderArea inladderarea = new InLadderArea();
+    private ZMI bot;
+    public InAltarArea(ZMI bot) {
+        this.bot =bot;
+    }
+
 
     @Override
     public boolean validate() {
@@ -23,11 +27,11 @@ public class InAltarArea extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return inladderarea;
+        return new InLadderArea(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return canemptypouch;
+        return new CanEmptyPouch(bot);
     }
 }

@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_open;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 
 // import path.to.your.WithdrawStamina
 // import path.to.your.ShouldWithdrawFood
@@ -12,8 +13,10 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
  */
 public class ShouldWithdrawStamina extends BranchTask {
 
-    private WithdrawStamina withdrawstamina = new WithdrawStamina();
-    private ShouldWithdrawFood shouldwithdrawfood = new ShouldWithdrawFood();
+    private ZMI bot;
+    public ShouldWithdrawStamina(ZMI bot) {
+        this.bot = bot;
+    }
 
     @Override
     public boolean validate() {
@@ -22,11 +25,11 @@ public class ShouldWithdrawStamina extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return shouldwithdrawfood;
+        return new ShouldWithdrawFood(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return withdrawstamina;
+        return new WithdrawStamina(bot);
     }
 }

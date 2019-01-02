@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_open;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 
 // import path.to.your.DepositInventory
 // import path.to.your.ShouldWithdrawStamina
@@ -12,8 +13,11 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
  */
 public class CanDepositInventory extends BranchTask {
 
-    private DepositInventory depositinventory = new DepositInventory();
-    private ShouldWithdrawStamina shouldwithdrawstamina = new ShouldWithdrawStamina();
+    private ZMI bot;
+    public CanDepositInventory(ZMI bot) {
+        this.bot =bot;
+    }
+
 
     @Override
     public boolean validate() {
@@ -22,11 +26,11 @@ public class CanDepositInventory extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return shouldwithdrawstamina;
+        return new ShouldWithdrawStamina(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return depositinventory;
+        return new DepositInventory(bot);
     }
 }

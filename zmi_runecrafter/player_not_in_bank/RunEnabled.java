@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_not_in_bank;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_not_in_bank.altar_area.InAltarArea;
 
 // import path.to.your.InAltarArea
@@ -13,8 +14,11 @@ import com.stixx.bots.zmi_runecrafter.player_not_in_bank.altar_area.InAltarArea;
  */
 public class RunEnabled extends BranchTask {
 
-    private InAltarArea inaltararea = new InAltarArea();
-    private ShouldActivateRun shouldactivaterun = new ShouldActivateRun();
+    private ZMI bot;
+    public RunEnabled(ZMI bot) {
+        this.bot =bot;
+    }
+
 
     @Override
     public boolean validate() {
@@ -23,11 +27,11 @@ public class RunEnabled extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return shouldactivaterun;
+        return new ShouldActivateRun(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return inaltararea;
+        return new InAltarArea(bot);
     }
 }

@@ -2,6 +2,7 @@ package com.stixx.bots.barrows;
 
 import com.runemate.game.api.hybrid.local.Varbit;
 import com.runemate.game.api.hybrid.local.Varp;
+import com.runemate.game.api.hybrid.local.hud.interfaces.ChatDialog;
 import com.runemate.game.api.hybrid.local.hud.interfaces.InterfaceComponent;
 import com.runemate.game.api.hybrid.local.hud.interfaces.InterfaceContainer;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Interfaces;
@@ -30,7 +31,9 @@ public class Barrows extends LoopingScript {
 
     @Override
     public void onLoop() {
+        System.out.println("chat title" + ChatDialog.getTitle());
         // System.out.println("Looping");
+        /**
         InterfaceComponent left = Interfaces.getAt(25, 6);
         InterfaceComponent middle = Interfaces.getAt(25, 7);
         InterfaceComponent right = Interfaces.getAt(25, 8);
@@ -47,6 +50,6 @@ public class Barrows extends LoopingScript {
         if (right != null) {
             System.out.println("right: " + right.toString() + " Id: " + right.getId() + " spriteId: " + right.getSpriteId());
         }
-
+*/
     }
 }

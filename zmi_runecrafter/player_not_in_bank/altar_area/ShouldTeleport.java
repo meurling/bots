@@ -2,6 +2,7 @@ package com.stixx.bots.zmi_runecrafter.player_not_in_bank.altar_area;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_bank.ShouldTakeFastRouteToBank;
 
 // import path.to.your.Teleport
@@ -13,8 +14,10 @@ import com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_bank.ShouldTa
  */
 public class ShouldTeleport extends BranchTask {
 
-    private Teleport teleport = new Teleport();
-    private ShouldTakeFastRouteToBank shouldtakefastroutetobank = new ShouldTakeFastRouteToBank();
+    private ZMI bot;
+    public ShouldTeleport(ZMI bot) {
+        this.bot = bot;
+    }
 
     @Override
     public boolean validate() {
@@ -23,11 +26,11 @@ public class ShouldTeleport extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return shouldtakefastroutetobank;
+        return new ShouldTakeFastRouteToBank(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return teleport;
+        return new Teleport(bot);
     }
 }

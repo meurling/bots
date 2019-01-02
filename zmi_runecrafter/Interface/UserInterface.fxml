@@ -43,10 +43,10 @@
          </Text>
          <HBox alignment="CENTER" layoutX="33.0" layoutY="268.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="538.0" spacing="10.0">
             <children>
-               <CheckBox fx:id="Small_Pouch" mnemonicParsing="false" text="Small pouch" />
-               <CheckBox fx:id="Medium_Pouch" mnemonicParsing="false" text="Medium pouch" />
-               <CheckBox fx:id="Large_Pouch" mnemonicParsing="false" text="Large pouch" />
-               <CheckBox fx:id="Giant_Pouch" mnemonicParsing="false" text="Large pouch" />
+               <CheckBox fx:id="Small_Pouch" mnemonicParsing="false" text="Small pouch" selected="true" />
+               <CheckBox fx:id="Medium_Pouch" mnemonicParsing="false" text="Medium pouch" selected="true" />
+               <CheckBox fx:id="Large_Pouch" mnemonicParsing="false" text="Large pouch" selected="true" />
+               <CheckBox fx:id="Giant_Pouch" mnemonicParsing="false" text="Large pouch" selected="true" />
             </children>
          </HBox>
          <Text layoutX="261.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select route:" underline="true" wrappingWidth="87.0">
@@ -60,7 +60,7 @@
                <Font size="14.0" />
             </font>
          </Text>
-         <ComboBox fx:id="RunePouch_Box" layoutX="231.0" layoutY="315.0" prefWidth="150.0" />
+         <ComboBox fx:id="RunePouch_Box" layoutX="231.0" layoutY="315.0" prefWidth="150.0"  />
          <Text layoutX="225.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Runes in inventory:" underline="true" wrappingWidth="161.873046875">
             <font>
                <Font size="14.0" />
@@ -68,13 +68,13 @@
          </Text>
          <HBox alignment="CENTER" layoutX="25.0" layoutY="366.0" prefHeight="27.0" prefWidth="545.0" spacing="10.0">
             <children>
-               <CheckBox mnemonicParsing="false" text="Air" />
-               <CheckBox mnemonicParsing="false" text="Earth" />
-               <CheckBox mnemonicParsing="false" text="Dust" />
-               <CheckBox mnemonicParsing="false" text="Law" />
-               <CheckBox mnemonicParsing="false" text="Astral" />
-               <CheckBox mnemonicParsing="false" text="Cosmic" />
-               <CheckBox mnemonicParsing="false" text="Fire" />
+               <CheckBox fx:id="Inventory_Air" mnemonicParsing="false" text="Air" />
+               <CheckBox fx:id="Inventory_Earth" mnemonicParsing="false" text="Earth" />
+               <CheckBox fx:id="Inventory_Dust" mnemonicParsing="false" text="Dust" />
+               <CheckBox fx:id="Inventory_Law" mnemonicParsing="false" text="Law" selected="true" />
+               <CheckBox fx:id="Inventory_Astral" mnemonicParsing="false" text="Astral" />
+               <CheckBox fx:id="Inventory_Cosmic" mnemonicParsing="false" text="Cosmic" />
+               <CheckBox fx:id="Inventory_Fire" mnemonicParsing="false" text="Fire" />
             </children>
          </HBox>
          <Text layoutX="243.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Using Staminas?" underline="true" wrappingWidth="126.873046875">
@@ -90,8 +90,8 @@
          </Text>
          <HBox alignment="CENTER" layoutX="16.0" layoutY="472.0" prefHeight="25.0" prefWidth="563.0" spacing="10.0">
             <children>
-               <CheckBox mnemonicParsing="false" text="Air" />
-               <CheckBox mnemonicParsing="false" text="Earth" />
+               <CheckBox fx:id="Staff_Air" mnemonicParsing="false" text="Air" />
+               <CheckBox fx:id="Staff_Earth" mnemonicParsing="false" text="Earth" selected="true" />
             </children>
          </HBox>
          <Text layoutX="263.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Food:" underline="true" wrappingWidth="87.0">

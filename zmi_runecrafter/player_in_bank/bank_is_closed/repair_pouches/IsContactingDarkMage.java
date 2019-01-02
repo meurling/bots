@@ -1,7 +1,9 @@
 package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.repair_pouches;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.ChatDialog;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.repair_pouches.CanRepairPouch;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.repair_pouches.HandleDarkMage;
 
@@ -14,21 +16,31 @@ import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.repair_pouch
  */
 public class IsContactingDarkMage extends BranchTask {
 
-    private HandleDarkMage handledarkmage = new HandleDarkMage();
-    private CanRepairPouch canrepairpouch = new CanRepairPouch();
+    private ZMI bot;
+    public IsContactingDarkMage(ZMI bot) {
+        this.bot = bot;
+    }
+
 
     @Override
     public boolean validate() {
-        return false;
+        boolean castingNPC = bot.player.getAnimationId() == 4413;
+        if (ChatDialog.getTitle() != null) {
+            System.out.println("Chat titel: " + ChatDialog.getTitle());
+            return castingNPC || ChatDialog.getTitle().equals("Dark Mage") || ChatDialog.getTitle().equals(bot.player.getName());
+
+        } else {
+            return castingNPC;
+        }
     }
 
     @Override
     public TreeTask failureTask() {
-        return canrepairpouch;
+        return new CanRepairPouch(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return handledarkmage;
+        return new HandleDarkMage(bot);
     }
 }
