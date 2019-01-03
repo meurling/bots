@@ -144,16 +144,16 @@ public class Controller implements Initializable {
 
     private void setEssencePouches() {
         if (Small_Pouch.isSelected()) {
-            bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Small pouch", 3));
+            bot.SETTING_ESSENCE_POUCHES.add(bot.Small_Pouch);
         }
         if (Medium_Pouch.isSelected()) {
-            bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Medium pouch", 6));
+            bot.SETTING_ESSENCE_POUCHES.add(bot.Medium_Pouch);
         }
         if (Large_Pouch.isSelected()) {
-            bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Large pouch", 9));
+            bot.SETTING_ESSENCE_POUCHES.add(bot.Large_Pouch);
         }
         if (Giant_Pouch.isSelected()) {
-            bot.SETTING_ESSENCE_POUCHES.add(new EssencePouch("Giant pouch", 12));
+            bot.SETTING_ESSENCE_POUCHES.add(bot.Giant_Pouch);
         }
     }
 }

@@ -22,7 +22,7 @@ public class MustEatFood extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.helper.timeForFood();
     }
 
     @Override

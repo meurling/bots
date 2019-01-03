@@ -17,6 +17,6 @@ public class ChooseAltarTravelMethod extends LeafTask {
 
     @Override
     public void execute() {
-
+        System.out.println("Choose travel method");
     }
 }

@@ -1,4 +1,4 @@
-package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.essence_handling;
+package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_open.essence_handling;
 
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
@@ -22,7 +22,7 @@ public class HasEmptyPouches extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.helper.getEmptyPouches().size() > 0;
     }
 
     @Override

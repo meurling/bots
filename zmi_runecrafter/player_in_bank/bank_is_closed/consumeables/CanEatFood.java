@@ -1,5 +1,6 @@
 package com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.consumeables;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
@@ -21,7 +22,7 @@ public class CanEatFood extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return Inventory.contains(bot.SETTING_FOOD);
     }
 
     @Override

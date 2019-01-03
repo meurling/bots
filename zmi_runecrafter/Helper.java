@@ -4,6 +4,7 @@ import com.runemate.game.api.hybrid.local.hud.interfaces.Health;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.osrs.local.RunePouch;
+import com.stixx.bots.zmi_runecrafter.custom_objects.EssencePouch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,25 @@ public class Helper {
         this.bot = bot;
     }
 
+    public List<EssencePouch> getEmptyPouches() {
+        List<EssencePouch> emptyPouches = new ArrayList<EssencePouch>();
+        for (int i = 0; i < bot.SETTING_ESSENCE_POUCHES.size(); i++) {
+            if (!bot.SETTING_ESSENCE_POUCHES.get(i).isFull()) {
+                emptyPouches.add(bot.SETTING_ESSENCE_POUCHES.get(i));
+            }
+        }
+        return emptyPouches;
+    }
+
     public boolean timeForFood() {
         return Health.getCurrentPercent() < 50;
     }
 
     public boolean timeForStamina() {
         if (bot.SETTING_USE_STAMINA) {
+            System.out.println("active: " + bot.staminaActive);
+            System.out.println("run_ "+ Traversal.getRunEnergy());
+            System.out.println("timer: " + bot.staminaTimer.getRuntime()/1000);
             return !bot.staminaActive || Traversal.getRunEnergy() < 19 || bot.staminaTimer.getRuntime() /1000 > 105;
 
         } else return false;

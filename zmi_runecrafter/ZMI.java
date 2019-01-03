@@ -21,7 +21,7 @@ import javafx.scene.Node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener {
+public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpListener {
 
     //---------------BRANCHES---------------//
     //---------------BRANCHES---------------//
@@ -36,6 +36,7 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener {
         public boolean SETTING_USE_RUNEPOUCH;
         public boolean SETTING_USE_TELEPORT;
         public String SETTING_FOOD;
+
     //---------------SETTINGS---------------//
 
     //---------------RUN_TIME---------------//
@@ -60,6 +61,10 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener {
         public StopWatch staminaTimer = new StopWatch();
         public boolean staminaActive = false;
         public StopWatch runTime = new StopWatch();
+        public EssencePouch Giant_Pouch = new EssencePouch("Giant pouch", 12);
+        public EssencePouch Large_Pouch = new EssencePouch("Large pouch", 9);
+        public EssencePouch Medium_Pouch = new EssencePouch("Medium pouch", 6);
+        public EssencePouch Small_Pouch = new EssencePouch("Small pouch", 3);
     //---------------VARIABLES---------------//
 
     //---------------AREAS---------------//
@@ -74,6 +79,8 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener {
         helper = new Helper(this);
         setEmbeddableUI(this);
         runTime.start();
+        staminaTimer.start();
+        getEventDispatcher().addListener(this);
     }
     /*
     @Override
@@ -126,6 +133,35 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener {
                 } else if (newValue == 0) {
                     staminaActive = false;
                 }
+        }
+    }
+
+    @Override
+    public void onValueChanged(VarpEvent varpEvent) {
+        int varp = varpEvent.getVarp().getIndex();
+        int oldValue = varpEvent.getOldValue();
+        int newValue = varpEvent.getNewValue();
+        int diff = newValue - oldValue;
+        // essence pouches
+        if (varp == 261) {
+            switch (diff) {
+                case 1:
+                    Small_Pouch.fillPouch();
+                    System.out.println("Filled small pouch");
+                    break;
+                case 2:
+                    Medium_Pouch.fillPouch();
+                    System.out.println("Filled medium pouch");
+                    break;
+                case 4:
+                    Large_Pouch.fillPouch();
+                    System.out.println("Filled large pouch");
+                    break;
+                case 8:
+                    Giant_Pouch.fillPouch();
+                    System.out.println("Filled Giant pouch");
+                    break;
+            }
         }
     }
 }

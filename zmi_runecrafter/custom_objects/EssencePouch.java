@@ -9,4 +9,20 @@ public class EssencePouch {
         this.name = name;
         this.capacity = capacity;
     }
+
+    public boolean isFull() {
+        return hasEssenceInPouch;
+    }
+
+    public void fillPouch() {
+        hasEssenceInPouch = true;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
