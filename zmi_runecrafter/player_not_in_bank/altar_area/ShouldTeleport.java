@@ -21,7 +21,9 @@ public class ShouldTeleport extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        String[] runes = {"Law rune", "Astral rune", "Earth rune"};
+        System.out.println("Runes missing for teleport: " + bot.helper.getMissingRunes(runes).toString());
+        return bot.SETTING_USE_TELEPORT && bot.helper.getMissingRunes(runes).size() == 0;
     }
 
     @Override

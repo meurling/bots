@@ -22,6 +22,8 @@ public class DrinkStamina extends LeafTask {
         bot.currentTaskString = "Drinking Stamina, cheers!";
         if (Inventory.getItems(Pattern.compile("Stamina .+")).first().click()) {
             Execution.delayUntil(() -> !bot.helper.timeForStamina(), 500);
+            bot.staminaActive = true;
+            bot.staminaTimer.reset();
         }
     }
 }

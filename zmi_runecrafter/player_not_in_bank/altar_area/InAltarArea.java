@@ -4,6 +4,7 @@ import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_not_in_bank.ladder_area.InLadderArea;
+import com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar.AltarVisible;
 
 // import path.to.your.CanEmptyPouch
 // import path.to.your.InLadderArea
@@ -22,12 +23,12 @@ public class InAltarArea extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.ALTAR_AREA.contains(bot.player);
     }
 
     @Override
     public TreeTask failureTask() {
-        return new InLadderArea(bot);
+        return new AltarVisible(bot);
     }
 
     @Override

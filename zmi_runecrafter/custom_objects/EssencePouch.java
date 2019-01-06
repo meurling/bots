@@ -25,4 +25,8 @@ public class EssencePouch {
     public String getName() {
         return name;
     }
+
+    public void emptyPouch() {
+        hasEssenceInPouch = false;
+    }
 }

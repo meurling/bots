@@ -1,23 +1,24 @@
-package com.stixx.bots.zmi_runecrafter.player_not_in_bank.altar_area;
+package com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar;
 
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
+import com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_bank.WalkToBankSlow;
 
-// import path.to.your.CraftRune
-// import path.to.your.ShouldTeleport
+// import path.to.your.ShouldStopFollow
 
 /**
  * NOTES:
- * 
+ *
  */
-public class HasEssence extends BranchTask {
+public class IsTravellingToAltarSlow extends BranchTask {
 
     private ZMI bot;
-    public HasEssence(ZMI bot) {
+    public IsTravellingToAltarSlow(ZMI bot) {
         this.bot =bot;
     }
+
 
     @Override
     public boolean validate() {
@@ -26,11 +27,11 @@ public class HasEssence extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return new ShouldDropRune(bot);
+        return new WalkToBankSlow(bot);
     }
 
     @Override
     public TreeTask successTask() {
-        return new CraftRune(bot);
+        return new IsNearShortcut(bot);
     }
 }

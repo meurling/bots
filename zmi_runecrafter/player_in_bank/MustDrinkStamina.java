@@ -4,6 +4,7 @@ import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_closed.consumeables.CanDrinkStamina;
+import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_open.MustFillPouch;
 import com.stixx.bots.zmi_runecrafter.player_in_bank.bank_is_open.essence_handling.HasEmptyPouches;
 import com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar.ChooseAltarTravelMethod;
 
@@ -28,7 +29,7 @@ public class MustDrinkStamina extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return new ChooseAltarTravelMethod(bot);
+        return new MustFillPouch(bot);
     }
 
     @Override

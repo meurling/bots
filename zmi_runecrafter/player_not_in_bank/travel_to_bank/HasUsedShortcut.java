@@ -1,7 +1,9 @@
 package com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_bank;
 
+import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.EmptyLeaf;
 import com.stixx.bots.zmi_runecrafter.ZMI;
 import com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar.ClickShortcut;
 
@@ -22,7 +24,7 @@ public class HasUsedShortcut extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.SHORTCUT_AREA.contains(bot.player);
     }
 
     @Override
@@ -32,6 +34,6 @@ public class HasUsedShortcut extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return  new WalkToBankSlow(bot);
+        return new EmptyLeaf(bot, "HasUsedShortCut");
     }
 }

@@ -2,9 +2,12 @@ package com.stixx.bots.zmi_runecrafter.Interface;
 
 import com.runemate.game.api.hybrid.util.Resources;
 import com.stixx.bots.zmi_runecrafter.ZMI;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +19,9 @@ import java.util.concurrent.Future;
 public class InfoInterface extends GridPane implements Initializable {
 
     private ZMI bot;
+
+    @FXML
+    public Text ExperienceGained, ExperiencePerHour, RunTime;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -48,6 +54,13 @@ public class InfoInterface extends GridPane implements Initializable {
     }
 
     public void update() {
-
+        try {
+            Info i = bot.info;
+            ExperiencePerHour.textProperty().set("" + i.experiencePerHour);
+            RunTime.textProperty().set("" + i.runTime);
+            ExperienceGained.textProperty().set("" + i.experienceGained + " (" + i.levelsGained + ")");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

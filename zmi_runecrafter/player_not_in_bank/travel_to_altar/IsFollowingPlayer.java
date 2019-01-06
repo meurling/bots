@@ -1,7 +1,9 @@
 package com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.EmptyLeaf;
 import com.stixx.bots.zmi_runecrafter.ZMI;
 
 // import path.to.your.ShouldStopFollow
@@ -20,12 +22,12 @@ public class IsFollowingPlayer extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.followingPlayer && Inventory.contains("Pure essence");
     }
 
     @Override
     public TreeTask failureTask() {
-        return null;
+        return new TravelToAltar(bot);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.stixx.bots.zmi_runecrafter.player_not_in_bank;
 
+import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
@@ -23,7 +24,7 @@ public class ShouldActivateRun extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return Traversal.isRunEnabled();
     }
 
     @Override

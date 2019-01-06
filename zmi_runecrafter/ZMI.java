@@ -2,26 +2,34 @@ package com.stixx.bots.zmi_runecrafter;
 
 import com.runemate.game.api.client.embeddable.EmbeddableUI;
 import com.runemate.game.api.hybrid.entities.Player;
+import com.runemate.game.api.hybrid.local.Skill;
 import com.runemate.game.api.hybrid.location.Area;
 import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.util.StopWatch;
+import com.runemate.game.api.hybrid.util.calculations.CommonMath;
+import com.runemate.game.api.script.framework.listeners.SkillListener;
 import com.runemate.game.api.script.framework.listeners.VarbitListener;
 import com.runemate.game.api.script.framework.listeners.VarpListener;
+import com.runemate.game.api.script.framework.listeners.events.SkillEvent;
 import com.runemate.game.api.script.framework.listeners.events.VarbitEvent;
 import com.runemate.game.api.script.framework.listeners.events.VarpEvent;
 import com.runemate.game.api.script.framework.tree.TreeBot;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.stixx.bots.zmi_runecrafter.Interface.Info;
+import com.stixx.bots.zmi_runecrafter.Interface.InfoController;
 import com.stixx.bots.zmi_runecrafter.Interface.InfoInterface;
 import com.stixx.bots.zmi_runecrafter.Interface.UserInterface;
 import com.stixx.bots.zmi_runecrafter.custom_objects.EssencePouch;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpListener {
+public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpListener, SkillListener {
 
     //---------------BRANCHES---------------//
     //---------------BRANCHES---------------//
@@ -40,11 +48,11 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpLi
     //---------------SETTINGS---------------//
 
     //---------------RUN_TIME---------------//
-        public int levelsGained;
+        public int levelsGained = 0;
         public int magicLevelsGained;
-        public int rcExperienceGained;
+        public int experienceGained = 0;
         public int moneyGained;
-        public String currentTaskString;
+        public String currentTaskString = "Lighting the engines...";
         public int magicExperienceGained;
         public Helper helper;
     //---------------RUN_TIME---------------//
@@ -54,6 +62,8 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpLi
         public SimpleObjectProperty<Node> botInterfaceProperty;
         private InfoInterface infoInterface;
         public UserInterface userInterface; // configs
+        public Info info;
+        public InfoController infoController;
     //---------------GUIs---------------//
 
     //---------------VARIABLES---------------//
@@ -65,10 +75,18 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpLi
         public EssencePouch Large_Pouch = new EssencePouch("Large pouch", 9);
         public EssencePouch Medium_Pouch = new EssencePouch("Medium pouch", 6);
         public EssencePouch Small_Pouch = new EssencePouch("Small pouch", 3);
+        public boolean followingPlayer = false;
+        public StopWatch bankStandingTimer = new StopWatch();
+        public StopWatch standingStillTimer = new StopWatch();
     //---------------VARIABLES---------------//
 
     //---------------AREAS---------------//
         public Area BANK_AREA = new Area.Rectangular(new Coordinate(3009, 5624, 0), new Coordinate(3021, 5630, 0));
+        public Area FIRST_AREA = new Area.Rectangular(new Coordinate(3013, 5619, 0), new Coordinate(3015, 5623, 0));
+        public Area ALTAR_AREA = new Area.Rectangular(new Coordinate(3055, 5574, 0), new Coordinate(3062, 5586, 0));
+        public Area SHORTCUT_AREA = new Area.Rectangular(new Coordinate(3050, 5587, 0), new Coordinate(3053, 5588, 0));
+        public Area LAST_AREA = new Area.Rectangular(new Coordinate(3048, 5574, 0), new Coordinate(3054, 5579, 0));
+
     //---------------AREAS---------------//
 
     @Override
@@ -78,19 +96,46 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpLi
         botInterfaceProperty = null;
         helper = new Helper(this);
         setEmbeddableUI(this);
-        runTime.start();
         staminaTimer.start();
         getEventDispatcher().addListener(this);
+        bankStandingTimer.start();
+        standingStillTimer.start();
     }
-    /*
+
     @Override
-    public void onValueChanged(VarpEvent varpEvent) {
+    public void onStop() {
+        super.onStop();
+        System.out.println("Small full: " + Small_Pouch.isFull());
+        System.out.println("Medium full: " + Medium_Pouch.isFull());
+        System.out.println("Large full: " + Large_Pouch.isFull());
+        System.out.println("Giant full: " + Giant_Pouch.isFull());
 
     }
-*/
+
     @Override
     public TreeTask createRootTask() {
         return new Root(this);
+    }
+
+
+    @Override
+    public void onExperienceGained(SkillEvent event) {
+        System.out.println("Gained experience!");
+        if (event != null) {
+            if (event.getSkill() == Skill.RUNECRAFTING) {
+                experienceGained += event.getChange();
+            }
+        }
+    }
+
+    @Override
+    public void onLevelUp(SkillEvent event) {
+        System.out.println("Gained Level!");
+        if (event != null) {
+            if (event.getSkill() == Skill.RUNECRAFTING) {
+                levelsGained++;
+            }
+        }
     }
 
     @Override
@@ -117,7 +162,17 @@ public class ZMI extends TreeBot implements EmbeddableUI, VarbitListener, VarpLi
     }
 
     public void updateInfo() {
-
+        try {
+            info = new Info(
+                    experienceGained,
+                    levelsGained,
+                    currentTaskString,
+                    runTime
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Platform.runLater(() -> infoInterface.update());
     }
 
     @Override

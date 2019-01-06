@@ -24,16 +24,23 @@ public class Root extends BranchTask {
         if (bot == null) {
             System.out.println("Bot is null");
         }
+        if (!bot.runTime.isRunning()) {
+            bot.runTime.start();
+        }
         bot.player = Players.getLocal();
         bot.updateInfo();
         System.out.println("Currently: " + bot.currentTaskString);
+        if (bot.player.isMoving()) {
+            bot.bankStandingTimer.reset();
+            bot.standingStillTimer.reset();
+        }
         return new IsPlayerInBank(bot);
     }
 
     @Override
     public TreeTask successTask() {
         System.out.println("Waiting for configs");
-        return new EmptyLeaf(bot);
+        return new EmptyLeaf(bot, "Root");
     }
 
     @Override

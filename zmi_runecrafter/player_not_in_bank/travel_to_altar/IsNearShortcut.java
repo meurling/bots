@@ -1,5 +1,6 @@
 package com.stixx.bots.zmi_runecrafter.player_not_in_bank.travel_to_altar;
 
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
@@ -20,7 +21,7 @@ public class IsNearShortcut extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.SHORTCUT_AREA.contains(bot.player) && Inventory.contains("Pure essence");
     }
 
     @Override
@@ -30,6 +31,6 @@ public class IsNearShortcut extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return new ClickShortcutToAltar(bot);
+        return new ClickShortcut(bot);
     }
 }

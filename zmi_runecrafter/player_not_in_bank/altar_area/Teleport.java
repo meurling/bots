@@ -1,5 +1,7 @@
 package com.stixx.bots.zmi_runecrafter.player_not_in_bank.altar_area;
 
+import com.runemate.game.api.osrs.local.hud.interfaces.Magic;
+import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 import com.stixx.bots.zmi_runecrafter.ZMI;
 
@@ -16,6 +18,8 @@ public class Teleport extends LeafTask {
 
     @Override
     public void execute() {
-
+        bot.currentTaskString="Teleporting";
+        Magic.Lunar.OURANIA_TELEPORT.activate();
+        Execution.delayUntil(() -> !bot.ALTAR_AREA.contains(bot.player), 3000);
     }
 }

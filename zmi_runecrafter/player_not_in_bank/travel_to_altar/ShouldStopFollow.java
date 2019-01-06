@@ -21,12 +21,12 @@ public class ShouldStopFollow extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return !bot.player.isMoving() || bot.player.isFacing(bot.BANK_AREA);
     }
 
     @Override
     public TreeTask failureTask() {
-        return new EmptyLeaf(bot);
+        return new EmptyLeaf(bot, "ShouldStopFollow");
     }
 
     @Override

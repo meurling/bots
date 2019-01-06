@@ -14,7 +14,7 @@
     <internal-id>OuraniaAltar</internal-id>
     <!--The rest are optional-->
     <open-source>true</open-source>
-    <hidden>false</hidden> <!--If you need to hide it from the bot store for maintenance-->
+    <hidden>true</hidden> <!--If you need to hide it from the bot store for maintenance-->
     <access>public</access>
     <tags>
         <tag>RuneCrafting</tag>

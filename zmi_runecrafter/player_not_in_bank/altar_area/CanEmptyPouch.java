@@ -21,7 +21,7 @@ public class CanEmptyPouch extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return bot.helper.getEmptyablePouches().size() > 0;
     }
 
     @Override
